@@ -1,0 +1,47 @@
+create table usuario(
+name varchar(200) not null,
+lastName varchar(200) not null,
+username varchar(150) not null,
+password varchar (150) not null,
+email varchar(150),
+CONSTRAINT pk_usuario PRIMARY KEY (username)
+);
+
+create table estudiante(
+carnet_estudiante varchar(150) not null unique,
+CONSTRAINT pk_estudiante PRIMARY KEY (username)
+)INHERITS (usuario);
+
+create table externo(
+institucion varchar(150) not null,
+utilidad_labo varchar(200) not null,
+CONSTRAINT pk_externo PRIMARY KEY (username)
+)INHERITS (usuario);
+
+create table docente(
+carnet_docente varchar(150) not null unique,
+departamento varchar(150) not null,
+materia_impartida varchar(150) not null,
+CONSTRAINT pk_docente PRIMARY KEY (username)
+)INHERITS (usuario);
+
+create table administrador(
+CONSTRAINT pk_administrador PRIMARY KEY (username)
+)INHERITS (usuario);
+
+create table laboratorio(
+codigo_laboratorio varchar(100) not null,
+costo float,
+numero_laboratorio int not null,
+CONSTRAINT pk_laboratorio PRIMARY KEY (codigo_laboratorio)
+);
+
+create table reserva(
+codigo_laboratorio varchar(100) not null,
+username_reserva varchar(150) not null,
+fecha varchar(150) not null,
+hora varchar(100) not null,
+estado_reserva varchar(150) not null,
+CONSTRAINT pk_reserva PRIMARY KEY (codigo_laboratorio,username_reserva),
+CONSTRAINT fk_reserva_admin FOREIGN KEY (username_reserva) REFERENCES administrador(username) ON DELETE CASCADE ON UPDATE CASCADE);
+
