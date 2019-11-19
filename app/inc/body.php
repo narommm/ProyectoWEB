@@ -85,7 +85,7 @@
   <h3 class="text-center wowload fadeInUp">Servicios</h3>
 	<ul class="row text-center list-inline  wowload bounceInUp">
    		<li>
-            <span><i class="fa fa-desktop"></i><b>Photography</b></span>
+            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/index.php">Reservas</a></b></span>
         </li>
         <li>
             <span><i class="fa fa-cube"></i><b></b>dfjfhalda</span>
@@ -109,7 +109,7 @@
             <p>Lily likes to play with crayons and pencils<br>
          
           
-              <a href="app/jqueryCalendar/index.php" title="1">View more</a></p>     
+              <a href="images/portfolio/2.jpg" title="1">View more</a></p>     
                        
             
         </figcaption>
