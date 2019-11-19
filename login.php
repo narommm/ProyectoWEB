@@ -11,24 +11,21 @@ if (isset($_SESSION['nombre'])) {
 if(!empty($_POST)) {
 
     $usuario = $_POST["usuario"];
-    $pass = md5($_POST["contra"]);
+    $password = md5($_POST["contra"]);
 
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT * FROM USUARIO WHERE username = ? AND pass =?";
+        $sql = "SELECT * FROM usuario WHERE username = ? AND password = ?";
         $stmt =$PDO->prepare($sql);
-        $stmt->execute(array($usuario, $pass));
+        $stmt->execute(array($usuario, $password));
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $PDO = null;
         if(!empty($data)) {
-
             //Almacenamos el nombre de usuario en una variable de sesión usuario
             $_SESSION['usuario'] = $data['username'];
-            $_SESSION['nombre'] = $data['nombre'];
-            $_SESSION['tipo'] = $data['tipo'];
+            $_SESSION['nombre'] = $data['name'];
             
               echo($_SESSION['usuario']);
               echo($_SESSION['nombre']);
-              echo($_SESSION['tipo']);
 
               header('location: index.php');
           }
