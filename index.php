@@ -32,11 +32,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['nombre'])) {
-  include 'inc/body.php';
+  include 'app/inc/body.php';
     }
     else
     {
-      include 'inc/body_log.php';
+      include 'app/inc/body_log.php';
     }
 ?>
 </html>
