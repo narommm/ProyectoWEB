@@ -1,28 +1,17 @@
 create table usuario(
-
 name varchar(200) not null,
 lastName varchar(200) not null,
-
 username varchar(150) not null,
-
 password varchar (150) not null,
-
 email varchar(150),
-
-tipo varchar(100)
- not null,
+tipo varchar(100)not null,
 
 CONSTRAINT pk_usuario PRIMARY KEY (username));
 
-
-
 create table estudiante(
-
 carnet_estudiante varchar(150) not null unique,
 
-
 CONSTRAINT pk_estudiante PRIMARY KEY (username)
-
 )INHERITS (usuario);
 
 
@@ -37,8 +26,6 @@ utilidad_labo varchar(200) not null,
 CONSTRAINT pk_externo PRIMARY KEY (username)
 
 )INHERITS (usuario);
-
-
 
 create table docente(
 
@@ -57,10 +44,8 @@ CONSTRAINT pk_docente PRIMARY KEY (username)
 
 create table administrador(
 
-
+codigo varchar(100) not null unique,
 CONSTRAINT pk_administrador PRIMARY KEY (username)
-
-codigo varchar(100) notnull unique,
 )INHERITS (usuario);
 
 
@@ -70,8 +55,9 @@ numero_laboratorio int not null,
 denominacion varchar(200),
 
 costo float,
+numero_maquinas int,
 
-CONSTRAINT pk_laboratorio PRIMARY KEY (numero_laboratorio);
+CONSTRAINT pk_laboratorio PRIMARY KEY (numero_laboratorio));
 
 
 
@@ -81,18 +67,21 @@ numero_laboratorio varchar(100) not null,
 
 usuario_peticion varchar(100) not null,
 motivo_peticion varchar(200) not null,
-reserva_inicio datetime not null,
+hora_peticion timestamp not null,
+reserva_inicio timestamp not null,
 
-reserva_fin datetime not null,
+reserva_fin timestamp not null,
 
-encargado varchar(150)not null,
-estado_reserva varchar(150) not null,
+encargado varchar(150),
+estado_reserva varchar(150),
+costo_reserva float,
+hora_resolucion_reserva timestamp,
 
 
 CONSTRAINT pk_reserva PRIMARY KEY (numero_laboratorio,reserva_inicio,reserva_fin),
 
 
-CONSTRAINT fk_reserva_usuario FOREIGN KEY (usuario_reserva) REFERENCES usuario(username) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT fk_reserva_admin FOREIGN KEY (username_reserva) REFERENCES administrador(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT fk_reserva_usuario FOREIGN KEY (usuario_peticion) REFERENCES usuario(username) ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT fk_reserva_admin FOREIGN KEY (usuario_peticion) REFERENCES administrador(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
