@@ -21,24 +21,27 @@
      center:'title',
      right:'month,agendaWeek,agendaDay'
     },
-    events: 'load.php',
+    events: 'app/jqueryCalendar/load.php',
     selectable:true,
     selectHelper:true,
 
     
-    select: function(start, end, allDay)
+    select: function(numeroLabo, usuarioPeticion, motivoPeticion, horaPeticion,start, end, allDay)
     {
-     var title = prompt("Agrega una reserva");
-     var labo = prompt("Agrega una labo");
-     if(title)
-     {
-    
+     var numeroLabo = prompt("Agrega numero labo");
+     var usuarioPeticion = prompt("Agrega una usuario");
+     var motivoPeticion = prompt("Agrega el motivo");
+     var inicio = prompt("Agrega inicio");
+     var fin = prompt("Agrega fin");
+     var horaPeticion = prompt("Agrega una hora");
+     if(labo )
+     {  
       var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
       var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
       $.ajax({
-       url:"insert.php",
+       url:"app/jqueryCalendar/insert.php",
        type:"POST",
-       data:{title:title, start:start, end:end},
+       data:{numeroLabo:numeroLabo,usuarioPeticion:usuarioPeticion, motivoPeticion:motivoPeticion, start:start, end:end,  horaPeticion:horaPeticion},
        success:function()
        {
         calendar.fullCalendar('refetchEvents');
