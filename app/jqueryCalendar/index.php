@@ -9,8 +9,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
   
+ 
   <script>
-   
+    
   $(document).ready(function() {
    var calendar = $('#calendar').fullCalendar({
     editable:true,
@@ -22,6 +23,8 @@
     events: 'load.php',
     selectable:true,
     selectHelper:true,
+
+    /*
     select: function(start, end, allDay)
     {
      var title = prompt("Enter Event Title");
@@ -94,9 +97,9 @@
       })
      }
     },
-
+*/
    });
-  });
+  }); 
    
   </script>
  </head>

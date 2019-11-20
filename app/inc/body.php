@@ -85,10 +85,10 @@
   <h3 class="text-center wowload fadeInUp">Servicios</h3>
 	<ul class="row text-center list-inline  wowload bounceInUp">
    		<li>
-            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/index.php">Reservas</a></b></span>
+            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/viewCalendar.php">Reservas</a></b></span>
         </li>
         <li>
-            <span><i class="fa fa-cube"></i><b></b>dfjfhalda</span>
+            <span><i class="fa fa-cube"></i><b></b>ICPC</span>
         </li>
         <li>
             <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
