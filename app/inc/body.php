@@ -39,32 +39,32 @@
 
 <div id="home">
 <!-- Slider Starts -->
-<div id="myCarousel" class="carousel slide banner-slider animated bounceInDown" data-ride="carousel">     
-      <div class="carousel-inner">
-        <!-- Item 1 -->
-        <div class="item active">
-          <img src="images/back1.jpg" alt="banner">
+  <div id="myCarousel" class="carousel slide banner-slider animated bounceInDown" data-ride="carousel">     
+        <div class="carousel-inner">
+          <!-- Item 1 -->
+          <div class="item active">
+            <img src="images/back1.jpg" alt="banner">
+          </div>
+          <!-- #Item 1 -->
+          <!-- Item 1 -->
+          <div class="item">
+            <img src="images/back2.jpg" alt="banner">
+          </div>
+          <!-- #Item 1 -->
+          <!-- Item 1 -->
+          <div class="item">
+            <img src="images/back3.jpg" alt="banner">
+          </div>
+          <!-- #Item 1 -->
+          <!-- Item 1 -->
+          <div class="item">
+            <img src="images/back4.jpg" alt="banner">
+          </div>
+          <!-- #Item 1 -->
         </div>
-        <!-- #Item 1 -->
-        <!-- Item 1 -->
-        <div class="item">
-          <img src="images/back2.jpg" alt="banner">
-        </div>
-        <!-- #Item 1 -->
-        <!-- Item 1 -->
-        <div class="item">
-          <img src="images/back3.jpg" alt="banner">
-        </div>
-        <!-- #Item 1 -->
-        <!-- Item 1 -->
-        <div class="item">
-          <img src="images/back4.jpg" alt="banner">
-        </div>
-        <!-- #Item 1 -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon-chevron-left"><i class="fa fa-angle-left"></i></span></a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon-chevron-right"><i class="fa fa-angle-right"></i></span></a>
       </div>
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon-chevron-left"><i class="fa fa-angle-left"></i></span></a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon-chevron-right"><i class="fa fa-angle-right"></i></span></a>
-    </div>
 <!-- #Slider Ends -->
 </div>
 <!-- Cirlce Starts -->
@@ -85,10 +85,10 @@
   <h3 class="text-center wowload fadeInUp">Servicios</h3>
 	<ul class="row text-center list-inline  wowload bounceInUp">
    		<li>
-            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/index.php">Reservas</a></b></span>
+            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/viewCalendar.php">Reservas</a></b></span>
         </li>
         <li>
-            <span><i class="fa fa-cube"></i><b></b>dfjfhalda</span>
+            <span><i class="fa fa-cube"></i><b></b>ICPC</span>
         </li>
         <li>
             <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
@@ -105,13 +105,9 @@
     <figure class="effect-oscar  wowload fadeInUp">
         <img src="images/portfolio/1.jpg" alt="img01"/>
         <figcaption>
-            <h2>Enero</h2>
-            <p>Lily likes to play with crayons and pencils<br>
-         
-          
-              <a href="images/portfolio/2.jpg" title="1">View more</a></p>     
-                       
-            
+            <h2>ICPC</h2>
+            <p>International Competition<br>
+            <a href="images/pictures/icpc.jpg" title="1">View more</a></p>     
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">

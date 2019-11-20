@@ -80,14 +80,6 @@
 <!-- #Slider Ends -->
 </div>
 
-
-
-
-
-
-
-
-
 <!-- Cirlce Starts -->
 <div id="about"  class="container spacer about">
 <h2 class="text-center wowload fadeInUp">Sistema de reserva de laboratorios.</h2>  
@@ -105,20 +97,20 @@
   </div>
 
   <div class="services">
-  <h3 class="text-center wowload fadeInUp">Servicios</h3>
-	<ul class="row text-center list-inline  wowload bounceInUp">
-   		<li>
-            <span><i class="fa fa-desktop"></i><b>Photography</b></span>
-        </li>
+    <h3 class="text-center wowload fadeInUp">Servicios</h3>
+    <ul class="row text-center list-inline  wowload bounceInUp">
         <li>
-            <span><i class="fa fa-cube"></i><b></b>dfjfhalda</span>
-        </li>
-        <li>
-            <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
-        </li>
+              <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/index.php">Reservas</a></b></span>
+          </li>
+          <li>
+              <span><i class="fa fa-cube"></i><b></b>dfjfhalda</span>
+          </li>
+          <li>
+              <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
+          </li>
 
-  	</ul>
-  </div>
+      </ul>
+    </div>
 </div>
 <!-- #Cirlce Ends -->
 <br>

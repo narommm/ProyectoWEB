@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
  <head>
@@ -25,10 +24,10 @@
     selectable:true,
     selectHelper:true,
 
-    
+    /*
     select: function(start, end, allDay)
     {
-     var title = prompt("Agrega una reserva");
+     var title = prompt("Enter Event Title");
      if(title)
      {
       var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
@@ -83,7 +82,7 @@
 
     eventClick:function(event)
     {
-     if(confirm("Seguro que deseas eliminiar la reserva?"))
+     if(confirm("Are you sure you want to remove it?"))
      {
       var id = event.id;
       $.ajax({
@@ -98,7 +97,7 @@
       })
      }
     },
-
+*/
    });
   }); 
    
