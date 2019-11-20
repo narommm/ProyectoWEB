@@ -20,14 +20,16 @@ if(!empty($_POST)) {
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $PDO = null;
         if(!empty($data)) {
-            //Almacenamos el nombre de usuario en una variable de sesión usuario
-            $_SESSION['usuario'] = $data['username'];
-            $_SESSION['nombre'] = $data['name'];
-            
-              echo($_SESSION['usuario']);
-              echo($_SESSION['nombre']);
 
-              header('location: index.php');
+            //Almacenamos credenciales para la session.
+
+            $_SESSION['usuario'] = $data['username'];
+            $_SESSION['name'] = $data['name'];
+            $_SESSION['lastname'] = $data['lastname'];
+            $_SESSION['email'] = $data['email'];
+            $_SESSION['tipo'] = $data['tipo'];
+              
+            header('location: index.php');
           }
     }
 ?>

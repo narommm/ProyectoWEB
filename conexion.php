@@ -6,7 +6,6 @@
     try
     {
         $PDO = new PDO("pgsql:host=".$host."; "."dbname=".$dbname, $user, $pass);
-        echo "Conectado";
     }
     catch(PDOException $e)
     {

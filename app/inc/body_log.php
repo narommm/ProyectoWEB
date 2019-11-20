@@ -1,4 +1,5 @@
-  <body>
+
+<body>
 <div class="topbar animated fadeInLeftBig"></div>
 
 <!-- Header Starts -->

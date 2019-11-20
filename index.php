@@ -23,20 +23,24 @@
 <link rel="stylesheet" href="assets/gallery/blueimp-gallery.min.css">
 
 <!-- favicon -->
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.jpg" type="image/x-icon">
 <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
 
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <?php
-session_start();
-if (!isset($_SESSION['nombre'])) {
-  include 'app/inc/body.php';
+  session_start();
+  if (!isset($_SESSION['usuario'])) {
+    include 'app/inc/body.php';
+  }
+  else{
+    if($_SESSION['tipo']=="administrador"){
+      include 'app/inc/body_log_admin.php';
     }
-    else
-    {
+    else{
       include 'app/inc/body_log.php';
     }
+  }
 ?>
 </html>
