@@ -62,10 +62,11 @@ CONSTRAINT pk_laboratorio PRIMARY KEY (numero_laboratorio));
 
 
 create table reserva(
-
-numero_laboratorio varchar(100) not null,
+id int not null,
+numero_laboratorio int not null,
 
 usuario_peticion varchar(100) not null,
+usuario_resolucion varchar(100)not null,	
 motivo_peticion varchar(200) not null,
 hora_peticion timestamp not null,
 reserva_inicio timestamp not null,
@@ -78,10 +79,12 @@ costo_reserva float,
 hora_resolucion_reserva timestamp,
 
 
-CONSTRAINT pk_reserva PRIMARY KEY (numero_laboratorio,reserva_inicio,reserva_fin),
+CONSTRAINT pk_reserva PRIMARY KEY (id),
 
 
 CONSTRAINT fk_reserva_usuario FOREIGN KEY (usuario_peticion) REFERENCES usuario(username) ON DELETE CASCADE ON UPDATE CASCADE,
-CONSTRAINT fk_reserva_admin FOREIGN KEY (usuario_peticion) REFERENCES administrador(username) ON DELETE CASCADE ON UPDATE CASCADE
+CONSTRAINT fk_reserva_admin FOREIGN KEY (usuario_resolucion) REFERENCES administrador(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+insert into reserva values(1,'alexis','pureba','2019-11-20 14:53','2019-11-20 15:00','2019-11-20 16:00',null,'pendiente',null,null);
+insert into reserva values(1,1,'moises','alexis','pureba','2019-11-20 14:53','2019-11-20 15:00','2019-11-20 16:00',null,'pendiente',null,null);
