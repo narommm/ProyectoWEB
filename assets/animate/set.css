@@ -401,10 +401,6 @@ figure.effect-romeo:hover p {
 	transform: translate3d(0,-50%,0) translate3d(0,100%,0);
 }
 
-/*---------------*/
-/***** Layla *****/
-/*---------------*/
-
 figure.effect-layla {
 	background: #18a367;
 }
