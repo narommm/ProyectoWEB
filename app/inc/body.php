@@ -8,7 +8,7 @@
           <div class="container">
             <div class="navbar-header">
               <!-- Logo Starts -->
-              <a class="navbar-brand" href="#home"><img src="images/logo.png" alt="logo"></a>
+              <a class="navbar-brand" href="#home"><img src="images/LOGO1.png" alt="logo"></a>
               <!-- #Logo Ends -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -43,17 +43,17 @@
         <div class="carousel-inner">
           <!-- Item 1 -->
           <div class="item active">
-            <img src="images/back1.jpg" alt="banner">
+            <img src="images/BACK1.jpg" alt="banner">
           </div>
           <!-- #Item 1 -->
           <!-- Item 1 -->
           <div class="item">
-            <img src="images/back2.jpg" alt="banner">
+            <img src="images/BACK2.jpg" alt="banner">
           </div>
           <!-- #Item 1 -->
           <!-- Item 1 -->
           <div class="item">
-            <img src="images/back3.jpg" alt="banner">
+            <img src="images/BACK3.jpg" alt="banner">
           </div>
           <!-- #Item 1 -->
           <!-- Item 1 -->

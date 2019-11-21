@@ -48,6 +48,7 @@
 
 /* Anchor will cover the whole item by default */
 /* For some effects it will show as a button */
+
 .grid figure figcaption > a {
 	z-index: 1000;
 	text-indent: 200%;
@@ -70,12 +71,6 @@
 	letter-spacing: 1px;
 	font-size: 68.5%;
 }
-
-/* Individual effects */
-
-/*---------------*/
-/***** Lily *****/
-/*---------------*/
 
 figure.effect-lily img {
 	max-width: none;
@@ -138,10 +133,6 @@ figure.effect-lily:hover p {
 	transition-duration: 0.35s;
 }
 
-/*---------------*/
-/***** Sadie *****/
-/*---------------*/
-
 figure.effect-sadie figcaption::before {
 	position: absolute;
 	top: 0;
@@ -197,10 +188,6 @@ figure.effect-sadie:hover p {
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
-
-/*---------------*/
-/***** Roxy *****/
-/*---------------*/
 
 figure.effect-roxy {
 	background: -webkit-linear-gradient(45deg, #ff89e9 0%, #05abe0 100%);
@@ -261,10 +248,6 @@ figure.effect-roxy:hover p {
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
-
-/*---------------*/
-/***** Bubba *****/
-/*---------------*/
 
 figure.effect-bubba {
 	background: #9e5406;
