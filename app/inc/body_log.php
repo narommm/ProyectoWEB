@@ -179,7 +179,7 @@
 
 <!-- wow script -->
 <script src="assets/wow/wow.min.js"></script>
-
+ 
 
 <!-- boostrap -->
 <script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
