@@ -10,7 +10,7 @@ $connect = new PDO('pgsql:host=raja.db.elephantsql.com;dbname=npyottjk', 'npyott
 
 $data = array();
 
-$query = "SELECT * FROM reserva ORDER BY numero_laboratorio";
+$query = "SELECT * FROM reserva WHERE estado_reserva='aceptado' ORDER BY id ";
 
 $statement = $connect->prepare($query);
 
@@ -22,9 +22,15 @@ foreach($result as $row)
 {
  $data[] = array(
   'id'   => $row["id"],
-  'title'   => $row["title"],
-  'start'   => $row["start_event"],
-  'end'   => $row["end_event"]
+  'numero_laboratorio'   => $row["numero_laboratorio"],
+  'usuario_peticion'   => $row["usuario_peticion"],
+  'usuario_resolucion'   => $row["usuario_resolucion"],
+  'motivo_peticion'   => $row["motivo_peticion"],
+  'hora_peticion'   => $row["hora_peticion"],
+  'start'  => $row["reserva_inicio"],
+  'end'  => $row["reserva_fin"],
+  'usuario_peticion'   => $row["usuario_peticion"]
+  
  );
 }
 
