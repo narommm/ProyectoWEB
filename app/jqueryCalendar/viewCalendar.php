@@ -24,18 +24,25 @@
     selectable:true,
     selectHelper:true,
 
-    /*
-    select: function(start, end, allDay)
+    //select: function(numeroLabo, usuarioPeticion, motivoPeticion,start, end, allDay)
+    
+    /*select: function(start, end, allDay)
     {
-     var title = prompt("Enter Event Title");
-     if(title)
-     {
+     var numeroLabo = prompt("Agrega numero labo");
+     var usuarioPeticion = prompt("Agrega una usuario");
+     var usuarioResolucion = "alexis";
+     var motivoPeticion = prompt("Agrega el motivo");
+     //var inicio = prompt("Agrega inicio");
+     //var fin = prompt("Agrega fin");
+     var horaPeticion = prompt("Agrega una hora");
+     if(numeroLabo)
+     {  
       var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
       var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
       $.ajax({
        url:"insert.php",
        type:"POST",
-       data:{title:title, start:start, end:end},
+       data:{numero_laboratorio:numeroLabo,usuario_peticion:usuarioPeticion,usuario_resolucion:usuarioResolucion,motivo_peticion:motivoPeticion, reserva_inicio:start, reserva_fin:end,hora_peticion:horaPeticion},
        success:function()
        {
         calendar.fullCalendar('refetchEvents');
@@ -43,18 +50,22 @@
        }
       })
      }
-    },
+    },*/
     editable:true,
     eventResize:function(event)
     {
      var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
      var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-     var title = event.title;
      var id = event.id;
+     var numeroLabo = event.numero_laboratorio;
+     var usuarioPeticion =  event.usuario_peticion;
+     var usuarioResolucion =  event.usuario_resolucion;
+     var motivoPeticion =  event.motivo_peticion;
+     var horaPeticion =  event.hora_peticion;
      $.ajax({
       url:"update.php",
       type:"POST",
-      data:{title:title, start:start, end:end, id:id},
+      data:{numero_laboratorio:numeroLabo,usuario_peticion:usuarioPeticion,usuario_resolucion:usuarioResolucion,motivo_peticion:motivoPeticion, reserva_inicio:start, reserva_fin:end,hora_peticion:horaPeticion,id:id},
       success:function(){
        calendar.fullCalendar('refetchEvents');
        alert('Event Update');
@@ -64,15 +75,19 @@
 
     eventDrop:function(event)
     {
-     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-     var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-     var title = event.title;
-     var id = event.id;
+    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+    var id = event.id;
+    var numeroLabo = event.numero_laboratorio;
+    var usuarioPeticion =  event.usuario_peticion;
+    var usuarioResolucion =  event.usuario_resolucion;
+    var motivoPeticion =  event.motivo_peticion;
+    var horaPeticion =  event.hora_peticion;
      $.ajax({
       url:"update.php",
       type:"POST",
-      data:{title:title, start:start, end:end, id:id},
-      success:function()
+      data:{numero_laboratorio:numeroLabo,usuario_peticion:usuarioPeticion,usuario_resolucion:usuarioResolucion,motivo_peticion:motivoPeticion, reserva_inicio:start, reserva_fin:end,hora_peticion:horaPeticion,id:id},
+        success:function()
       {
        calendar.fullCalendar('refetchEvents');
        alert("Event Updated");
@@ -82,7 +97,7 @@
 
     eventClick:function(event)
     {
-     if(confirm("Are you sure you want to remove it?"))
+     if(confirm("Seguro que deseas eliminiar la reserva?"))
      {
       var id = event.id;
       $.ajax({
@@ -97,7 +112,7 @@
       })
      }
     },
-*/
+
    });
   }); 
    

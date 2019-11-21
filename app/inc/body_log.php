@@ -1,4 +1,3 @@
-
 <body>
 <div class="topbar animated fadeInLeftBig"></div>
 
@@ -27,7 +26,7 @@
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="#home">Home</a></li>
                  <li ><a href="#about">About</a></li>
-                 <li ><a href="#calendar">Calendar</a></li>
+                 <li ><a href="app/jqueryCalendar/calendar.php">Calendar</a></li>
                  <li ><a href="#contact">Contact</a></li>
                  <li><a href="salir.php">Salir</a></li>
               </ul>
