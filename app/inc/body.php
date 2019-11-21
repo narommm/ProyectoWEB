@@ -43,12 +43,12 @@
         <div class="carousel-inner">
           <!-- Item 1 -->
           <div class="item active">
-            <img src="images/BACK1.jpg" alt="banner">
+            <img src="images/BANNER1.jpg" alt="banner">
           </div>
           <!-- #Item 1 -->
           <!-- Item 1 -->
           <div class="item">
-            <img src="images/BACK2.jpg" alt="banner">
+            <img src="images/BANNER2.jpg" alt="banner">
           </div>
           <!-- #Item 1 -->
           <!-- Item 1 -->
@@ -56,13 +56,8 @@
             <img src="images/BACK3.jpg" alt="banner">
           </div>
           <!-- #Item 1 -->
-          <!-- Item 1 -->
-          <div class="item">
-            <img src="images/back4.jpg" alt="banner">
-          </div>
-          <!-- #Item 1 -->
         </div>
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon-chevron-left"><i class="fa fa-angle-left"></i></span></a>
+        <<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon-chevron-left"><i class="fa fa-angle-left"></i></span></a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon-chevron-right"><i class="fa fa-angle-right"></i></span></a>
       </div>
 <!-- #Slider Ends -->
@@ -84,11 +79,11 @@
   <div class="services">
   <h3 class="text-center wowload fadeInUp">Servicios</h3>
 	<ul class="row text-center list-inline  wowload bounceInUp">
-   		<li>
-            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/viewCalendar.php">Reservas</a></b></span>
-        </li>
         <li>
             <span><i class="fa fa-cube"></i><b></b>ICPC</span>
+        </li>
+        <li>
+            <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/viewCalendar.php">Reservas</a></b></span>
         </li>
         <li>
             <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
@@ -107,7 +102,7 @@
         <figcaption>
             <h2>ICPC</h2>
             <p>International Competition<br>
-            <a href="images/portfolio/2.jpg" title="1">View more</a></p>     
+            <a href="images/portfolio/2.jpg" title="1" data-gallery>Ver mas</a></p>     
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
@@ -115,7 +110,7 @@
         <figcaption>
             <h2>Febrero</h2>
             <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/2.jpg" title="1" data-gallery>View more</a></p>            
+            <a href="images/portfolio/2.jpg" title="1" data-gallery>Ver mas</a></p>            
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
@@ -123,32 +118,7 @@
         <figcaption>
             <h2>music</h2>
             <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/3.jpg" title="1" data-gallery>View more</a></p>            
-        </figcaption>
-    </figure>
-     <figure class="effect-oscar  wowload fadeInUp">
-        <img src="images/portfolio/4.jpg" alt="img01"/>
-        <figcaption>
-            <h2>Vintage</h2>
-            <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/4.jpg" title="1" data-gallery>View more</a></p>            
-        </figcaption>
-    </figure>
-     <figure class="effect-oscar  wowload fadeInUp">
-        <img src="images/portfolio/5.jpg" alt="img01"/>
-        <figcaption>
-            <h2>Typers</h2>
-            <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/5.jpg" title="1" data-gallery>View more</a></p>            
-        </figcaption>
-    </figure>
-     
-     <figure class="effect-oscar  wowload fadeInUp">
-        <img src="images/portfolio/6.jpg" alt="img01"/>
-        <figcaption>
-            <h2>hotel</h2>
-            <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/6.jpg" title="1" data-gallery>View more</a></p>            
+            <a href="images/portfolio/3.jpg" title="1" data-gallery>Ver mas</a></p>            
         </figcaption>
     </figure>
 </div>
