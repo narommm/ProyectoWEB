@@ -9,7 +9,7 @@
           <div class="container">
             <div class="navbar-header">
               <!-- Logo Starts -->
-              <a class="navbar-brand" href="#home"><img src="images/LOGO1.png" alt="logo"></a>
+              <a class="navbar-brand" href="#index.php"><img src="images/LOGO1.png" alt="logo"></a>
               <!-- #Logo Ends -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -24,10 +24,10 @@
             <!-- Nav Starts -->
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
-                 <li class="active"><a href="#home">Home</a></li>
-                 <li ><a href="#about">About</a></li>
-                 <li ><a href="app/jqueryCalendar/calendar.php">Calendar</a></li>
-                 <li ><a href="#contact">Contact</a></li>
+                 <li class="active"><a href="index.php">Home</a></li>
+                 <li ><a href="#about">Nosotros</a></li>
+                 <li ><a href="app/jqueryCalendar/calendar.php">Calendario</a></li>
+                 <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
                  <li><a href="salir.php">Salir</a></li>
               </ul>
             </div>
@@ -139,26 +139,7 @@
 </div>
 </div>
 </div>
-
-
-<div id="contact" class="spacer">
-<!--Contact Starts-->
-<div class="container contactform center">
-<h2 class="text-center  wowload fadeInUp">Contáctanos.</h2>
-  <div class="row wowload fadeInLeftBig">      
-      <div class="col-sm-6 col-sm-offset-3 col-xs-12">      
-        <input type="text" placeholder="Name">
-        <input type="text" placeholder="Company">
-        <input type="email" placeholder="email">
-        <textarea rows="5" placeholder="Message"></textarea>
-        <button class="btn btn-primary"><i class="fa fa-paper-plane"></i> Send</button>
-      </div>
-  </div>
-</div>
-</div>
-<!--Contact Ends-->
-
-
+<br>
 <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
     <!-- The container for the modal slides -->

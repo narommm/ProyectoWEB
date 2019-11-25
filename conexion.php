@@ -10,5 +10,7 @@
     catch(PDOException $e)
     {
         die($e->getMessage());
+        header('location: index.php');
+
     }
 ?>

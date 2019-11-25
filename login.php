@@ -1,11 +1,24 @@
 <?php
-require("conexion.php");
-session_start();
+//Activamos todas las notificaciones de error posibles
+error_reporting (E_ALL);
 
-if (isset($_SESSION['nombre'])) {
-         header('location: index.php');
-    exit();
-    }
+//Definimos el tratamiento de errores no controlados
+set_error_handler(function (){
+  throw new Exception("Error");
+});
+
+try{
+  require("conexion.php");
+  session_start();
+
+  if (isset($_SESSION['usuario'])) {
+          header('location: index.php');
+      exit();
+      }
+
+}catch(Exception $e){
+  echo("Error");
+}
 ?>
 <?php
 if(!empty($_POST)) {
@@ -65,10 +78,40 @@ if(!empty($_POST)) {
 <link rel="stylesheet" href="assets/style.css">
 
 </head>
-
-<body>
+<body><br><br><br><br><br><br><br><br>
 <div id="contact" class="spacer">
-
+<!-- Header Starts -->
+<div class="navbar-wrapper">
+      <div class="container">
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
+          <div class="container">
+            <div class="navbar-header">
+              <!-- Logo Starts -->
+              <a class="navbar-brand" href="index.php"><img src="images/LOGO1.png" alt="logo"></a>
+              <!-- #Logo Ends -->
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <!-- Nav Starts -->
+            <div class="navbar-collapse  collapse">
+              <ul class="nav navbar-nav navbar-right">
+                 <li class="active"><a href="#home">Home</a></li>
+                 <li ><a href="#about">About</a></li>
+                 <li ><a href="app/jqueryCalendar/viewCalendar.php">Calendar</a></li>
+                 <li ><a href="#contact">Contact</a></li>
+                 <li><a href="login.php">Login</a></li>
+              </ul>
+            </div>
+            <!-- #Nav Ends -->
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- #Header Starts -->
 <!--Login Starts-->
 
 <form class="container contactform center" role="form" method ='POST'>
