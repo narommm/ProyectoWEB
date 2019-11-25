@@ -1,7 +1,8 @@
  jQuery(document).ready(function($) {
- 
+ /* escuchando eventos */
     $(".scroll a, .navbar-brand, .gototop").click(function(event){   
     event.preventDefault();
+    /* estableciendo las coordenadas de desplazamiento para el body */
     $('html,body').animate({scrollTop:$(this.hash).offset().top}, 600,'swing');
     $(".scroll li").removeClass('active');
     $(this).parents('li').toggleClass('active');
@@ -26,7 +27,7 @@ wow.init();
 
 
 
-
+/* reando efectos visuales con carousel en imagenes, y estableciendo botones de anterior y sguiente en posicion vertical */
 $('.carousel').swipe( {
      swipeLeft: function() {
          $(this).carousel('next');
