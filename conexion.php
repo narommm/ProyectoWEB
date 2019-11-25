@@ -13,5 +13,7 @@
     {
         /* si ocurre un error al conectar, se envia un mensaje de error */
         die($e->getMessage());
+        header('location: index.php');
+
     }
 ?>

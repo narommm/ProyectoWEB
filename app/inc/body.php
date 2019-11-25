@@ -8,7 +8,7 @@
           <div class="container">
             <div class="navbar-header">
               <!-- Logo Starts -->
-              <a class="navbar-brand" href="#home"><img src="images/LOGO1.png" alt="logo"></a>
+              <a class="navbar-brand" href="index.php"><img src="images/LOGO1.png" alt="logo"></a>
               <!-- #Logo Ends -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -103,7 +103,7 @@
         <figcaption>
             <h2>ICPC</h2>
             <p>International Competition<br>
-            <a href="images/portfolio/2.jpg" title="1" data-gallery>Ver mas</a></p>     
+            <a href="images/pictures/icpc.jpg" title="F" data-gallery>Ver mas</a></p>     
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
