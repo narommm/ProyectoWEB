@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 /* requiriendo de recuersos de la conexión para presentar nueva vista */
 require("conexion.php");
 session_start();
@@ -8,7 +7,6 @@ if (isset($_SESSION['nombre'])) {
          header('location: index.php');
     exit();
     }
-=======
 //Activamos todas las notificaciones de error posibles
 error_reporting (E_ALL);
 
@@ -29,7 +27,6 @@ try{
 }catch(Exception $e){
   echo("Error");
 }
->>>>>>> 4f28c075f470271a0ccda12b48dd13d5abb90d09
 ?>
 <?php
 if(!empty($_POST)) {
