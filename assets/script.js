@@ -16,11 +16,11 @@
 
 var wow = new WOW(
   {
-    boxClass:     'wowload',      // animated element css class (default is wow)
-    animateClass: 'animated', // animation css class (default is animated)
-    offset:       0,          // distance to the element when triggering the animation (default is 0)
-    mobile:       true,       // trigger animations on mobile devices (default is true)
-    live:         true        // act on asynchronously loaded content (default is true)
+    boxClass:     'wowload',      //animaciones del css (default is wow)
+    animateClass: 'animated', // animation css class (daimado por defecto)
+    offset:       0,          // Distancia hasta el elemento cuando se activa el elemento (asignado en 0)
+    mobile:       true,       // activar las animaciones del dispositivo (inincializado en true)
+    live:         true        // activar asincrónicamente la carga del contenido (inincializado en true)
   }
 );
 wow.init();
