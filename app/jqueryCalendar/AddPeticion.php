@@ -221,41 +221,102 @@ if (!isset($_SESSION['usuario'])) {
 </form>
 </div>
 <!--Login Ends-->
-</section><!--/#registration-->
-        <table class='table table-striped table-bordered table-hover'>
-            <tr class='warning'>
-                <th>Laboratorio</th>
-                <th>Motivo</th>
-                <th>Realizada</th>
-                <th>inicio</th>
-                <th>fin</th>
-                <th>costo</th>
-                <th>estado</th>
-            </tr>
-            <tbody>
-            <?php
-                require("../../conexion.php");
-                $sql = "SELECT numero_laboratorio,usuario_peticion, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE usuario_peticion ='".$_SESSION['usuario']."'". (($paginacion->get_page() -1) * $resul) . ',' . $resul;  
-                $data = "";
-                foreach($PDO->query($sql) as $row) {
-                    $data .= "<tr>";
-                    $data .= "<td>$row[numero_laboratorio]</td>";
-                    $data .= "<td>$row[motivo_peticion]</td>";
-                    $data .= "<td>$row[hora_peticion]</td>";
-                    $data .= "<td>$row[reserva_inicio]</td>";
-                    $data .= "<td>$row[reserva_fin]</td>";
-                    $data .= "<td>$row[costo_reserva]</td>";
-                    $data .= "<td>$row[estado_reserva]</td>";
-                    $data .= "<td>"; 
-                    $data .= "</tr>";
-                }
-                print($data);
-                $PDO = null;
-            ?>
-            </tbody>
-        </table>
-            <?php $paginacion->render(); ?>
-    </section>
+
+<div class = "container">
+  <aside class="col-sm-4 col-sm-push-0">
+      <div class="widget search">
+          <form name="form1" method="GET" action = "AddPeticion.php" id="cdr">
+              <h2>Buscar Peticion</h2>
+              <h6>Por numero de laboratorio</h6>
+              <div class="form-group">
+                  <input class="form-control"  name="buscar" type="text" id="busqueda" placeholder="Busqueda" autocomplete="off">
+                  <span class="input-group-btn">
+                      <button class="btn btn-danger" type="submit" name="submit" value="Buscar"><i class="icon-search"></i></button>
+                  </span>
+              </div>
+          </form>
+      </div>
+  </aside>
+</div>
+ 
+<div class='container'>
+<table class='table'>
+  <thead class="thead-dark">
+  <tr class='warning'>
+    <th scope="col" >Laboratorio</th>
+    <th scope="col" >Motivo</th>
+    <th scope="col" >Realizada</th>
+    <th scope="col" >inicio</th>
+    <th scope="col" >fin</th>
+    <th scope="col" >costo</th>
+    <th scope="col" >estado</th>
+    </tr>
+  </thead>
+    <tbody>
+        <?php
+    if (isset($_GET['buscar']))
+        {
+            $buscar = $_GET['buscar'];
+
+            require("../../conexion.php");
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT numero_laboratorio, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE numero_laboratorio like %?%";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($buscar));
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $PDO = null;
+            if(empty($data)) {
+                header("Location: ../../index.php");
+            }
+            foreach($data as $row) {
+              echo'<tr>';
+              echo'<th scope="row">';
+              echo'<td>'.$row['numero_laboratorio'].'</td>';
+              echo'<td>'.$row['motivo_peticion'].'</td>';
+              echo'<td>'.$row['hora_peticion'].'</td>';
+              echo'<td>'.$row['reserva_inicio'].'</td>';
+              echo'<td>'.$row['reserva_fin'].'</td>';
+              echo'<td>'.$row['costo_reserva'].'</td>';
+              echo'<td>'.$row['estado_reserva'].'</td>';
+              //$data .= "<a class='btn btn-xs btn-primary' href='modificar_marcas.php?id_marca=$row[id_marca]'>ACTUALIZAR</a>&nbsp;";
+              //$data .= "<a class='btn btn-xs btn-danger' href='eliminar_marcas.php?id_marca=$row[id_marca]'>ELIMINAR</a>";
+              echo'</td>';
+              echo'</th>';
+            }
+          }
+        else {
+
+          require("../../conexion.php");
+          $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $sql = "SELECT numero_laboratorio, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE usuario_peticion = ?";
+          $stmt = $PDO->prepare($sql);
+          $stmt->execute(array($_SESSION['usuario']));
+          $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          $PDO = null;
+          if(empty($data)) {
+              header("Location: ../../index.php");
+          }
+          foreach($data as $row) {
+            echo'<tr>';
+            echo'<td>'.$row['numero_laboratorio'].'</td>';
+            echo'<td>'.$row['motivo_peticion'].'</td>';
+            echo'<td>'.$row['hora_peticion'].'</td>';
+            echo'<td>'.$row['reserva_inicio'].'</td>';
+            echo'<td>'.$row['reserva_fin'].'</td>';
+            echo'<td>'.$row['costo_reserva'].'</td>';
+            echo'<td>'.$row['estado_reserva'].'</td>';
+            //$data .= "<a class='btn btn-xs btn-primary' href='modificar_marcas.php?id_marca=$row[id_marca]'>ACTUALIZAR</a>&nbsp;";
+            //$data .= "<a class='btn btn-xs btn-danger' href='eliminar_marcas.php?id_marca=$row[id_marca]'>ELIMINAR</a>";
+            echo'</td>';
+            echo'</tr>';
+        }
+        }
+    ?>
+    </tbody>
+    <?php $paginacion->render(); ?>
+</table>
+</div>
+
 
 <!-- Footer Starts -->
 <div class="footer text-center spacer">
