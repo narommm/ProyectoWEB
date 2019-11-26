@@ -16,8 +16,6 @@ if (!isset($_SESSION['usuario'])) {
         $emailError = null;
         $tipoError = null;
 
-
-
         // post values
         require "input-filter/class.inputfilter.php";
         $filter = new InputFilter(array('b'), array ('src'));
@@ -26,7 +24,9 @@ if (!isset($_SESSION['usuario'])) {
         $lastName =  $filter->process(trim($_POST['last_name']));
         $username = $filter->process(trim($_POST['username']));
         $password = $filter->process(trim($_POST['password']));
-        //$password2 = $filter->process(trim($_POST['password2']));
+        $password2 = $filter->process(trim($_POST['password2']));
+        
+        $contra_encrip = md5($password);
         $email = $filter->process(trim($_POST['email']));
         $tipo = $filter->process(trim($_POST['tipo']));
 
@@ -39,15 +39,14 @@ if (!isset($_SESSION['usuario'])) {
         
         // validate input
         $valid = true;
+        
         if(empty($name)) {
           echo("9");
             $nameError = "Por favor ingrese el nombre.";
             $valid = false;
-        }
-        
+        }        
         if(empty($lastName)) {
           echo("8");
-
             $lastNameError = "Por favor ingrese su apellido.";
             $valid = false;
         }
@@ -57,27 +56,22 @@ if (!isset($_SESSION['usuario'])) {
           $usernameError = "Por favor ingrese el nombre de usuario.";
           $valid = false;
         }
-      
         if(empty($password)) {
           echo("6");
-
           $passwordError = "Por favor ingrese su contraseña.";
           $valid = false;
         }
-        /*if($password!=$password2) {
-          $reserva_fechaError = "Las contraseñas deben coincidir.";
+        if($password!=$password2) {
+          $passwordError = "Las contraseñas deben coincidir.";
           $valid = false;
-        }*/
+        }
         if(empty($email)) {
           echo("5");
-
-        $emailError = "Por favor ingrese su direccion de correo electronico.";
-        $valid = false;
+          $emailError = "Por favor ingrese su direccion de correo electronico.";
+          $valid = false;
       }      
         // insert data
         echo("1");
-        
-        $valid = false;
         
         if($valid) {
             require("../../conexion.php");
@@ -90,7 +84,7 @@ if (!isset($_SESSION['usuario'])) {
             $stmt = $PDO->prepare($sql);
             echo("c");
 
-            $stmt->execute(array($name, $lastName,$username, $password,$email,$tipo));
+            $stmt->execute(array($name, $lastName,$username, $contra_encrip,$email,$tipo));
             echo("d");
 
             $PDO = null;
@@ -103,7 +97,7 @@ if (!isset($_SESSION['usuario'])) {
   //concexion a la base para paginacion
   $conn = pg_connect("host=raja.db.elephantsql.com dbname=npyottjk user=npyottjk password=MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd");
   ///variables para paginacion
-  $total = pg_query($conn, "SELECT count (*) FROM usario");
+  $total = pg_query($conn, "SELECT count (*) FROM usuario");
   $resul = 10;
   //mandar los parametros para la paginacion
   $paginacion = new Zebra_Pagination();
