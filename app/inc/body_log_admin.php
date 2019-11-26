@@ -173,5 +173,4 @@
 
 <!-- custom script -->
 <script src="assets/script.js"></script>
-<li><a href="salir.php">Salir</a></li>
 </body>
