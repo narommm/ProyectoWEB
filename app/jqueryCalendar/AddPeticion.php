@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('location: viewCalendar.php');
+    header('location: ../../index.php');
     exit();
 }
 ?>
@@ -15,48 +15,93 @@ if (!isset($_SESSION['usuario'])) {
         $reserva_fechaError = null;
         $descripcionError = null;
 
+
         // post values
         require "input-filter/class.inputfilter.php";
         $filter = new InputFilter(array('b'), array ('src'));
 
-        $numero_laboratorio = $filter->process(trim($_POST['nombre_servicio']));
-        $descripcion_servicio = $filter->process(trim($_POST['descripcion_servicio']));
+        $numero_laboratorio = $filter->process(trim($_POST['laboratorio']));
+        $usuario_peticion = $_SESSION['usuario'];
+        $hora_inicio = $filter->process(trim($_POST['appt_inicio']));
+        $hora_fin = $filter->process(trim($_POST['appt_final']));
+        $reserva_fecha = $filter->process(trim($_POST['fecha']));
+        $motivo_peticion = $filter->process(trim($_POST['peticion']));
+
+        $time = time();
+        
+        $usuario_resolucion = null;
+        $hora_peticion = date("Y-m-d : H:i:s", $time);
+        $encargado = null;
+        $estado_reserva = 'pendiente';
+        
+        if($_SESSION['tipo']=="externo"){
+          
+          require("../../conexion.php");
+          $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $sql = "SELECT costo FROM laboratorio WHERE numero_laboratorio = ?";
+          $stmt = $PDO->prepare($sql);
+          $stmt->execute(array($numero_laboratorio));
+          $data = $stmt->fetch(PDO::FETCH_ASSOC);
+          if(empty($data)) {
+            $costo_reserva = 0.00;
+          }
+          echo($data);
+          
+        }
+        else{
+          $costo_reserva = 0.00;
+        } 
+        $hora_resolucion_reserva = null;
+        $reserva_inicio = $reserva_fecha." : ".$hora_inicio;
+        $reserva_fin = $reserva_fecha." : ".$hora_fin;
+        $hora_resolucion_reserva = null;
+
 
         // validate input
         $valid = true;
-        if(empty($nombre_servicio)) {
-            $nombre_servicioError = "Por favor ingrese el nombre del servico.";
+        if(empty($numero_laboratorio)) {
+            $numero_laboratorioError = "Por favor ingrese el numero del laboratorio.";
             $valid = false;
         }
         
-        if(empty($descripcion_servicio)) {
-            $descripcion_servicioError = "Por favor ingrese la descripcion del servicio.";
+        if(empty($reserva_inicio)) {
+            $reserva_inicioError = "Por favor ingrese la hora de inicio de su reserva.";
             $valid = false;
         }
-        
+        if(empty($reserva_fin)) {
+          $reserva_finError = "Por favor ingrese la hora final de su reserva.";
+          $valid = false;
+        }
+      
+        if(empty($reserva_fecha)) {
+          $reserva_fechaError = "Por favor ingrese la fecha de su servicio.";
+          $valid = false;
+        }
+        if(empty($motivo_peticion)) {
+        $descripcionError = "Por favor ingrese la descripcion de su reserva.";
+        $valid = false;
+      }      
         // insert data
         if($valid) {
             require("../../conexion.php");
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO reserva(n, descripcion_servicio) values(?, ?)";
+            $sql = "INSERT INTO reserva(numero_laboratorio,usuario_peticion,usuario_resolucion,motivo_peticion,hora_peticion,reserva_inicio,reserva_fin,encargado,estado_reserva,costo_reserva,hora_resolucion_reserva) values(?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($nombre_servicio, $descripcion_servicio));
+            $stmt->execute(array($numero_laboratorio, $usuario_peticion,$usuario_resolucion, $motivo_peticion,$hora_peticion,$reserva_inicio,$reserva_fin, $encargado,$estado_reserva, $costo_reserva,$hora_resolucion_reserva));
             $PDO = null;
-            header('location: AddReserva.php');
+            header('location: AddPeticion.php');
         }
     }
-    require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
-//concexion a la base para paginacion
-$conn = mysql_connect("localhost", "root") or die("error");
-
-mysql_select_db("ShoppStore", $conn) or die("error 2 ");
-///variables para paginacion
-$total = mysql_query("SELECT count(*) FROM servicios", $conn);
-$resul = 10;
-//mandar los parametros para la paginacion
-$paginacion = new Zebra_Pagination();
-$paginacion->records($total);
-$paginacion->records_per_page($resul);
+  require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
+  //concexion a la base para paginacion
+  $conn = pg_connect("host=raja.db.elephantsql.com dbname=npyottjk user=npyottjk password=MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd");
+  ///variables para paginacion
+  $total = pg_query($conn, "SELECT count (*) FROM reserva");
+  $resul = 10;
+  //mandar los parametros para la paginacion
+  $paginacion = new Zebra_Pagination();
+  $paginacion->records($total);
+  $paginacion->records_per_page($resul);
 
 ?>
 <!DOCTYPE html>
@@ -100,7 +145,7 @@ $paginacion->records_per_page($resul);
           <div class="container">
             <div class="navbar-header">
               <!-- Logo Starts -->
-              <a class="navbar-brand" href="index.php"><img src="../../images/LOGO1.png" alt="logo"></a>
+              <a class="navbar-brand" href="../../index.php"><img src="../../images/LOGO1.png" alt="logo"></a>
               <!-- #Logo Ends -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -144,22 +189,22 @@ $paginacion->records_per_page($resul);
 <h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
   <form class="row wowload fadeInLeftBig">      
       <div class="col-sm-3 col-sm-offset-2 col-xs-12">
-        <input type="text" placeholder="# Laboratorio" id="usuario" name="usuario" required>
+        <input type="text" placeholder="# Laboratorio" name="laboratorio" required>
         <input type="text" placeholder="<?php echo $_SESSION['usuario'];?>" id="usuario" name="usuario" disabled value="<?php echo $_SESSION['usuario'];?>">
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <label for="appt">Choose a time for your meeting:</label> 
-        <input type="time" id="appt" name="appt"
+        <label for="appt">Hora inicio:</label> 
+        <input type="time" id="appt_inicio" name="appt_inicio"
                 min="07:00" max="18:00" required>
-        <label for="appt">Choose a time for your meeting:</label>
-        <input type="time" id="appt" name="appt"
+        <label for="appt">Hora final:</label>
+        <input type="time" id="appt_final" name="appt_final"
                 min="09:00" max="18:00" required> 
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12"> 
       <label for="start">Fecha que desea reservar</label>
-        <input type="date" id="start" name="trip-start"
+        <input type="date" id="fecha" name="fecha"
                 min="2019-01-01" max="2019-12-31" required>            
-        <textarea rows="8" placeholder="Peticion" required></textarea>
+        <textarea name="peticion" id="peticion"rows="8" placeholder="Peticion" required></textarea>
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
       </div>
   </form>
@@ -199,24 +244,24 @@ Copyright 2014 Cyrus Creative Studio. All rights reserved.
 
 
 <!-- jquery -->
-<script src="assets/jquery.js"></script>
+<script src="../../assets/jquery.js"></script>
 
 <!-- wow script -->
-<script src="assets/wow/wow.min.js"></script>
+<script src="../../assets/wow/wow.min.js"></script>
 
 
 <!-- boostrap -->
-<script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
+<script src="../../assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
 
 <!-- jquery mobile -->
-<script src="assets/mobile/touchSwipe.min.js"></script>
-<script src="assets/respond/respond.js"></script>
+<script src="../../assets/mobile/touchSwipe.min.js"></script>
+<script src="../../assets/respond/respond.js"></script>
 
 <!-- gallery -->
-<script src="assets/gallery/jquery.blueimp-gallery.min.js"></script>
+<script src="../../assets/gallery/jquery.blueimp-gallery.min.js"></script>
 
 <!-- custom script -->
-<script src="assets/script.js"></script>
+<script src="../../assets/script.js"></script>
 
 </body>
 </html>
