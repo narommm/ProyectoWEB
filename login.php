@@ -126,11 +126,11 @@ if(!empty($_POST)) {
 <!--Login Starts-->
 
 <form class="container contactform center" role="form" method ='POST'>
-<h2 class="text-center  wowload fadeInUp">Start your session</h2>
+<h2 class="text-center  wowload fadeInUp">Inicia Sesion</h2>
   <form class="row wowload fadeInLeftBig">      
       <div class="col-sm-6 col-sm-offset-3 col-xs-12">      
-        <input type="text" placeholder="username" id="usuario" name="usuario">
-        <input type="password" placeholder="password" id="contra" name="contra">
+        <input type="text" placeholder="usuario" id="usuario" name="usuario">
+        <input type="password" placeholder="contraseña" id="contra" name="contra">
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i> Sign In</button>
       </div>
   </form>

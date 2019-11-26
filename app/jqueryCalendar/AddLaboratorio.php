@@ -10,16 +10,9 @@ if (!isset($_SESSION['usuario'])) {
 
         // validation errors
         $numero_laboratorioError = null;
-        $reserva_inicioError = null;
-        $reserva_finError = null;
-        $reserva_fechaError = null;
-        $descripcionError = null;
-
-        //Atributos de la tabla laboratorio
-       $denominacionError= null;
-       $costoError = null;
-       $numero_maquinas = null;
-
+        $denominacionError = null;
+        $costoError =  null;
+        $numero_maquinasError = null;
 
         // post values
         require "input-filter/class.inputfilter.php";
@@ -94,7 +87,7 @@ if (!isset($_SESSION['usuario'])) {
             $stmt = $PDO->prepare($sql);
             $stmt->execute(array($numero_laboratorio, $usuario_peticion,$usuario_resolucion, $motivo_peticion,$hora_peticion,$reserva_inicio,$reserva_fin, $encargado,$estado_reserva, $costo_reserva,$hora_resolucion_reserva));
             $PDO = null;
-            header('location: AddPeticion.php');
+            header('location: AddLaboratorio.php');
         }
     }
   require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
@@ -178,7 +171,7 @@ if (!isset($_SESSION['usuario'])) {
                     }
                   ?>
                   <li ><a href="viewCalendar.php">Calendar</a></li>  
-                  <li ><a href="AddPeticionAdmin.php">Reservar</a></li>
+                  <li ><a href="AddPeticion.php">Reservar</a></li>
                  <li><a href="../../salir.php">Salir</a></li>
               </ul>
             </div>
@@ -213,6 +206,9 @@ if (!isset($_SESSION['usuario'])) {
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
       </div>
   </form>
+
+
+
 </form>
 </div>
 <!--Login Ends-->
@@ -222,7 +218,7 @@ if (!isset($_SESSION['usuario'])) {
 <!-- Footer Starts -->
 <div class="footer text-center spacer">
 <p class="wowload flipInX"><a href="#"><i class="fa fa-facebook fa-2x"></i></a> <a href="#"><i class="fa fa-instagram fa-2x"></i></a> <a href="#"><i class="fa fa-twitter fa-2x"></i></a> <a href="#"><i class="fa fa-flickr fa-2x"></i></a> </p>
-Copyright 2019 Universidad Centroamerica José Simeón Cañas. All rights reserved.
+Copyright 2014 Cyrus Creative Studio. All rights reserved.
 </div>
 <!-- # Footer Ends -->
 <a href="#home" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>
