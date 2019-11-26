@@ -21,9 +21,9 @@
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="#home">Home</a></li>
-                 <li ><a href="#about">About</a></li>
-                 <li ><a href="app/jqueryCalendar/viewCalendar.php">Calendar</a></li>
-                 <li ><a href="#contact">Contact</a></li>
+                 <li ><a href="#about">Nosotros</a></li>
+                 <li ><a href="app/jqueryCalendar/viewCalendar.php">Calendario</a></li>
+                 <li ><a href="#contact">Contactanos</a></li>
                  <li><a href="login.php">Login</a></li>
               </ul>
             </div>
