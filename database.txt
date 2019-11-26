@@ -62,11 +62,12 @@ CONSTRAINT pk_laboratorio PRIMARY KEY (numero_laboratorio));
 
 
 create table reserva(
-id int not null,
+
+id SERIAL not null,
 numero_laboratorio int not null,
 
 usuario_peticion varchar(100) not null,
-usuario_resolucion varchar(100)not null,	
+usuario_resolucion varchar(100),	
 motivo_peticion varchar(200) not null,
 hora_peticion timestamp not null,
 reserva_inicio timestamp not null,
@@ -85,6 +86,5 @@ CONSTRAINT pk_reserva PRIMARY KEY (id),
 CONSTRAINT fk_reserva_usuario FOREIGN KEY (usuario_peticion) REFERENCES usuario(username) ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT fk_reserva_admin FOREIGN KEY (usuario_resolucion) REFERENCES administrador(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-insert into reserva values(1,'alexis','pureba','2019-11-20 14:53','2019-11-20 15:00','2019-11-20 16:00',null,'pendiente',null,null);
-insert into reserva values(1,1,'moises','alexis','pureba','2019-11-20 14:53','2019-11-20 15:00','2019-11-20 16:00',null,'pendiente',null,null);
+insert into reserva(numero_laboratorio,usuario_peticion,usuario_resolucion,motivo_peticion,hora_peticion,reserva_inicio,reserva_fin,encargado,estado_reserva,costo_reserva,hora_resolucion_reserva) values(1,'alexis',null,'pureba','2019-11-20 14:53','2019-11-20 15:00','2019-11-20 16:00',null,'pendiente',null,null);
+insert into reserva(numero_laboratorio,usuario_peticion,usuario_resolucion,motivo_peticion,hora_peticion,reserva_inicio,reserva_fin,encargado,estado_reserva,costo_reserva,hora_resolucion_reserva) values(1,'moises',null,'pureba','2019-11-20 14:53','2019-11-20 15:00','2019-11-20 16:00',null,'pendiente',null,null);
