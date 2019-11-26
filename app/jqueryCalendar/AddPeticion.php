@@ -33,6 +33,7 @@ if (!isset($_SESSION['usuario'])) {
         $hora_peticion = date("Y-m-d : H:i:s", $time);
         $encargado = null;
         $estado_reserva = 'pendiente';
+        $costo_laboratorio = null;
         
         if($_SESSION['tipo']=="externo"){
           
@@ -42,21 +43,21 @@ if (!isset($_SESSION['usuario'])) {
           $stmt = $PDO->prepare($sql);
           $stmt->execute(array($numero_laboratorio));
           $data = $stmt->fetch(PDO::FETCH_ASSOC);
-          if(empty($data)) {
-            $costo_reserva = 0.00;
-          }
-          echo($data);
           
+          if(empty($data)) {           
+              header('location: ../../index.php');            
+          }
+          $costo_laboratorio= $data['costo'];
+          $costo_reserva = $hora_fin-$hora_inicio;
+          $costo_reserva = $costo_reserva*$costo_laboratorio;
         }
         else{
           $costo_reserva = 0.00;
         } 
         $hora_resolucion_reserva = null;
-        $reserva_inicio = $reserva_fecha." : ".$hora_inicio;
-        $reserva_fin = $reserva_fecha." : ".$hora_fin;
+        $reserva_inicio = $reserva_fecha." ".$hora_inicio.":00";
+        $reserva_fin = $reserva_fecha." ".$hora_fin.":00";
         $hora_resolucion_reserva = null;
-
-
         // validate input
         $valid = true;
         if(empty($numero_laboratorio)) {
@@ -80,7 +81,12 @@ if (!isset($_SESSION['usuario'])) {
         if(empty($motivo_peticion)) {
         $descripcionError = "Por favor ingrese la descripcion de su reserva.";
         $valid = false;
-      }      
+      }     
+      
+      if($hora_fin < $hora_fin || $hora_fin == $hora_fin ); {
+        $descripcionError = "Horas invalidas";
+        $valid = false;
+      }  
         // insert data
         if($valid) {
             require("../../conexion.php");
@@ -110,7 +116,7 @@ if (!isset($_SESSION['usuario'])) {
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Cyrus Studio</title>
+<title>Reserva de Laboratorios</title>
 
 <!-- Google fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
@@ -137,6 +143,7 @@ if (!isset($_SESSION['usuario'])) {
 
 </head>
 <body><br><br><br><br><br><br><br><br>
+
 <div id="contact" class="spacer">
 <!-- Header Starts -->
 <div class="navbar-wrapper">
@@ -158,21 +165,21 @@ if (!isset($_SESSION['usuario'])) {
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="../../index.php">Home</a></li>
-                 <li ><a href="../../index.php/#about">About</a></li>
+                 <li ><a href="../../index.php/#about">Nosotros</a></li>
                  <?php
                     if (!isset($_SESSION['usuario'])) {
-                       //<li ><a href="calendar.php">Calendar</a></li>
+                       //<li ><a href="viewCalendar.php">Calendario</a></li>
                     }
                     else{
                       if($_SESSION['tipo']=="administrador"){
-                         //<li ><a href="calendar.php">Calendar</a></li>
+                         //<li ><a href="calendarADM.php">Calendario</a></li>
+                         //<li ><a href="peticion.php">Peticion</a></li
                       }
                       else{
-                         //<li ><a href="calendar.php">Calendar</a></li>
+                         //<li ><a href="calendar.php">Calendario</a></li>
                       }
                     }
                   ?>
-                  <li ><a href="viewCalendar.php">Calendar</a></li>  
                   <li ><a href="AddPeticion.php">Reservar</a></li>
                  <li><a href="../../salir.php">Salir</a></li>
               </ul>
@@ -193,15 +200,14 @@ if (!isset($_SESSION['usuario'])) {
         <input type="text" placeholder="<?php echo $_SESSION['usuario'];?>" id="usuario" name="usuario" disabled value="<?php echo $_SESSION['usuario'];?>">
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+        <h3>Formato 24 horas</h3>
         <label for="appt">Hora inicio:</label> 
-        <input type="time" id="appt_inicio" name="appt_inicio"
-                min="07:00" max="18:00" required>
+        <input type="text" id="appt_inicio" name="appt_inicio" required>
         <label for="appt">Hora final:</label>
-        <input type="time" id="appt_final" name="appt_final"
-                min="09:00" max="18:00" required> 
+        <input type="text" id="appt_final" name="appt_final" required> 
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12"> 
-      <label for="start">Fecha que desea reservar</label>
+        <label for="start">Fecha que desea reservar</label>
         <input type="date" id="fecha" name="fecha"
                 min="2019-01-01" max="2019-12-31" required>            
         <textarea name="peticion" id="peticion"rows="8" placeholder="Peticion" required></textarea>
@@ -214,8 +220,41 @@ if (!isset($_SESSION['usuario'])) {
 </form>
 </div>
 <!--Login Ends-->
-
-
+</section><!--/#registration-->
+        <table class='table table-striped table-bordered table-hover'>
+            <tr class='warning'>
+                <th>Laboratorio</th>
+                <th>Motivo</th>
+                <th>Realizada</th>
+                <th>inicio</th>
+                <th>fin</th>
+                <th>costo</th>
+                <th>estado</th>
+            </tr>
+            <tbody>
+            <?php
+                require("../../conexion.php");
+                $sql = "SELECT numero_laboratorio,usuario_peticion, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE usuario_peticion ='".$_SESSION['usuario']."'". (($paginacion->get_page() -1) * $resul) . ',' . $resul;  
+                $data = "";
+                foreach($PDO->query($sql) as $row) {
+                    $data .= "<tr>";
+                    $data .= "<td>$row[numero_laboratorio]</td>";
+                    $data .= "<td>$row[motivo_peticion]</td>";
+                    $data .= "<td>$row[hora_peticion]</td>";
+                    $data .= "<td>$row[reserva_inicio]</td>";
+                    $data .= "<td>$row[reserva_fin]</td>";
+                    $data .= "<td>$row[costo_reserva]</td>";
+                    $data .= "<td>$row[estado_reserva]</td>";
+                    $data .= "<td>"; 
+                    $data .= "</tr>";
+                }
+                print($data);
+                $PDO = null;
+            ?>
+            </tbody>
+        </table>
+            <?php $paginacion->render(); ?>
+    </section>
 
 <!-- Footer Starts -->
 <div class="footer text-center spacer">
