@@ -27,7 +27,7 @@
                  <li class="active"><a href="index.php">Home</a></li>
                  <li ><a href="#about">Nosotros</a></li>
                  <li ><a href="app/jqueryCalendar/calendar.php">Calendario</a></li>
-                 <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
+                 <li ><a href="app/jqueryCalendar/AddPeticionAdmin.php">Reservar</a></li>
                  <li><a href="salir.php">Salir</a></li>
               </ul>
             </div>
@@ -96,7 +96,7 @@
               <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/index.php">Reservas</a></b></span>
           </li>
           <li>
-              <span><i class="fa fa-cube"></i><b></b>dfjfhalda</span>
+              <span><i class="fa fa-cube"></i><b> Laboratorios</b></span>
           </li>
           <li>
               <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
@@ -120,11 +120,11 @@
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
-        <img src="images/portfolio/2.jpg" alt="img01"/>
+        <img src="images/pictures/laboratorios.jpg" alt="img01"/>
         <figcaption>
-            <h2>Febrero</h2>
-            <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/2.jpg" title="1" data-gallery>View more</a></p>            
+            <h2>Laboratorios</h2>
+            <p>Mantenimiento de laboratorios<br>
+            <a href="jqueryCalendar/AddLaboratorio.php">Añade un laboratorio</a></p>            
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
