@@ -174,5 +174,4 @@
 
 <!-- custom script -->
 <script src="assets/script.js"></script>
-
 </body>
