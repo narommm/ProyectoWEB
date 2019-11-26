@@ -2003,4 +2003,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
     })
   })
 
+  $('.hamburger').click(function () {
+    $('.hamburger').toggleClass('open');
+});
 }(jQuery);
