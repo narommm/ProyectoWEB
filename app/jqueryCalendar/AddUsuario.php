@@ -26,56 +26,84 @@ if (!isset($_SESSION['usuario'])) {
         $lastName =  $filter->process(trim($_POST['last_name']));
         $username = $filter->process(trim($_POST['username']));
         $password = $filter->process(trim($_POST['password']));
-        $password2 = $filter->process(trim($_POST['password2']));
+        //$password2 = $filter->process(trim($_POST['password2']));
         $email = $filter->process(trim($_POST['email']));
         $tipo = $filter->process(trim($_POST['tipo']));
 
-        $time = time();
+        echo($name);
+        echo($lastName);
+        echo($username);
+        echo($password);
+        echo($email);
+        echo($tipo);
         
         // validate input
         $valid = true;
         if(empty($name)) {
-            $numero_laboratorioError = "Por favor ingrese el nombre.";
+          echo("9");
+            $nameError = "Por favor ingrese el nombre.";
             $valid = false;
         }
         
         if(empty($lastName)) {
-            $reserva_inicioError = "Por favor ingrese su apellido.";
+          echo("8");
+
+            $lastNameError = "Por favor ingrese su apellido.";
             $valid = false;
         }
         if(empty($username)) {
-          $reserva_finError = "Por favor ingrese el nombre de usuario.";
+          echo("7");
+
+          $usernameError = "Por favor ingrese el nombre de usuario.";
           $valid = false;
         }
       
         if(empty($password)) {
-          $reserva_fechaError = "Por favor ingrese su contraseña.";
+          echo("6");
+
+          $passwordError = "Por favor ingrese su contraseña.";
           $valid = false;
         }
-        if($password!=$password2) {
+        /*if($password!=$password2) {
           $reserva_fechaError = "Las contraseñas deben coincidir.";
           $valid = false;
-        }
+        }*/
         if(empty($email)) {
-        $descripcionError = "Por favor ingrese su direccion de correo electronico.";
+          echo("5");
+
+        $emailError = "Por favor ingrese su direccion de correo electronico.";
         $valid = false;
       }      
         // insert data
+        echo("1");
+        
+        $valid = false;
+        
         if($valid) {
             require("../../conexion.php");
+            echo("a");
+
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            echo("b");
+
             $sql = "INSERT INTO usuario(name,lastName,username,password,email,tipo) values(?,?,?,?,?,?)";
             $stmt = $PDO->prepare($sql);
+            echo("c");
+
             $stmt->execute(array($name, $lastName,$username, $password,$email,$tipo));
+            echo("d");
+
             $PDO = null;
-            header('location: AddUsuario.php');
+            echo("f");
+            //header('location: AddUsuario.php');
         }
+        echo("3");
     }
   require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
   //concexion a la base para paginacion
   $conn = pg_connect("host=raja.db.elephantsql.com dbname=npyottjk user=npyottjk password=MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd");
   ///variables para paginacion
-  $total = pg_query($conn, "SELECT count (*) FROM reserva");
+  $total = pg_query($conn, "SELECT count (*) FROM usario");
   $resul = 10;
   //mandar los parametros para la paginacion
   $paginacion = new Zebra_Pagination();
@@ -168,34 +196,30 @@ if (!isset($_SESSION['usuario'])) {
 <h2 class="text-center  wowload fadeInUp">Registrar un Usuario</h2>
   <form class="row wowload fadeInLeftBig">      
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <label for="user">Ingrese Usuario:</label> 
-        <input type="text" placeholder="Username" name="username" required>
-        <select name="tipo">
+        <label for="username">Ingrese Usuario:</label> 
+        <input type="text" placeholder="Username" id="username" name="username" required>
+        <label for="nombre">Ingrese Nombre:</label> 
+        <input type="text" placeholder="Ej. Juan" id="nombre" name="nombre" required>
+        <label for="last_name">Ingrese Apellidos:</label> 
+        <input type="text" placeholder="Ej. Perez" id="last_name" name="last_name" required>
+        <label for="password">Ingrese Contraseña:</label> 
+        <input type="password" placeholder="*******" id="password" name="password" required>
+        <label for="password2">Confirme Contraseña:</label> 
+        <input type="password" placeholder="*******" id="password2" name="password2" required>
+        <label for="email">Ingrese email:</label> 
+        <input type="email" placeholder="ejemplo@ejemplo.com" id="email" name="email" required>
+        <label for="tipo">Ingrese tipo:</label> 
+        <div class="form-group">
+        <select id="tipo" name="tipo">
           <option value="estudiante">Estudiante</option>
           <option value="docente">Profesor o docente</option>
           <option value="externo">Persona ajena a la institucion</option>
           <option value="administrador">Usuario Administrador</option>
         </select>
-        <label for="user">Ingrese Nombre:</label> 
-        <input type="text" placeholder="Ej. Juan" name="nombre" required>
-        <label for="user">Ingrese Apellidos:</label> 
-        <input type="text" placeholder="Ej. Perez" name="last_name" required>
-        <label for="user">Ingrese Contraseña:</label> 
-        <input type="password" placeholder="*******" name="password" required>
-        <label for="user">Confirme Contraseña:</label> 
-        <input type="password" placeholder="*******" name="password2" required>
-        <label for="user">Ingrese email:</label> 
-        <input type="email" placeholder="ejemplo@ejemplo.com" name="email" required>
-        <label for="user">Ingrese tipo:</label> 
-        
+        </div>
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
-
       </div>
-      
   </form>
-
-
-
 </form>
 </div>
 <!--Login Ends-->

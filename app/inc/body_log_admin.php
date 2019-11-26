@@ -28,6 +28,7 @@
                  <li ><a href="#about">Nosotros</a></li>
                  <li ><a href="app/jqueryCalendar/calendar.php">Calendario</a></li>
                  <li ><a href="app/jqueryCalendar/AddPeticionAdmin.php">Reservar</a></li>
+                 <li ><a href="app/jqueryCalendar/AddUsuario.php">Registrar Usuario</a></li>
                  <li><a href="salir.php">Salir</a></li>
               </ul>
             </div>

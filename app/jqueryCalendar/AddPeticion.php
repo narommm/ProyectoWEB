@@ -181,6 +181,7 @@ if (!isset($_SESSION['usuario'])) {
                     }
                   ?>
                   <li ><a href="AddPeticion.php">Reservar</a></li>
+                  <li ><a href="AddUsuario.php">Registrar usuario</a></li>
                  <li><a href="../../salir.php">Salir</a></li>
               </ul>
             </div>
