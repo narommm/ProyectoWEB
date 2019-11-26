@@ -1,4 +1,12 @@
 <?php
+/* requiriendo de recuersos de la conexión para presentar nueva vista */
+require("conexion.php");
+session_start();
+
+if (isset($_SESSION['nombre'])) {
+         header('location: index.php');
+    exit();
+    }
 //Activamos todas las notificaciones de error posibles
 error_reporting (E_ALL);
 
@@ -22,14 +30,17 @@ try{
 ?>
 <?php
 if(!empty($_POST)) {
-
+/* Creando variables de usuario y contaseña para utilizar en el inicio de sesión */
     $usuario = $_POST["usuario"];
     $password = md5($_POST["contra"]);
-
+/* Estableciondo los codigos de error y generando un reporte de errores */
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        /* consultando a la base de datos */
         $sql = "SELECT * FROM usuario WHERE username = ? AND password = ?";
         $stmt =$PDO->prepare($sql);
+        /* procesando el usuario y contraseña para inicio de sesión */
         $stmt->execute(array($usuario, $password));
+        /* devuelve un array indexado por los nombres de las columnas del resultado y lo guarda en data */
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $PDO = null;
         if(!empty($data)) {
@@ -54,27 +65,27 @@ if(!empty($_POST)) {
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Cyrus Studio</title>
 
-<!-- Google fonts -->
+<!-- requiriendo Google fonts para poder usar el directorio iteractivo que nos facilitara el uso de fuentes de la web-->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
 
-<!-- font awesome -->
+<!--inicializando el uso de frameworks de font awesome para el uso de iconos -->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-<!-- bootstrap -->
+<!-- usando la biblioteca bootstrap para el suo de plantilas, formularios, botones y cuadros de nuestra página-->
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
 
-<!-- animate.css -->
+<!-- conectando animate.css para las animaciones y configuraciones de la página-->
 <link rel="stylesheet" href="assets/animate/animate.css" />
 <link rel="stylesheet" href="assets/animate/set.css" />
 
-<!-- gallery -->
+<!-- agregando gallery.min.css junto con totas las animaciones de imagenes y cuerpo de la página -->
 <link rel="stylesheet" href="assets/gallery/blueimp-gallery.min.css">
 
-<!-- favicon -->
+<!-- requiriendo los iconos de favicon y las imagenes que seran de utilidad en nuestra web -->
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
-
+<!--conectando y utilizando los estilos de animación de css-->
 <link rel="stylesheet" href="assets/style.css">
 
 </head>
@@ -144,38 +155,38 @@ Copyright 2014 Cyrus Creative Studio. All rights reserved.
 
 
 
-<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<!-- La biblioteca de la Galería de imágenes Bootstrap, debe ser un elemento secundario del body -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <!-- The container for the modal slides -->
+    <!-- el contenedor  -->
     <div class="slides"></div>
-    <!-- Controls for the borderless lightbox -->
+    <!-- controlando las caracteristicas del contenedor -->
     <h3 class="title">Title</h3>
     <a class="prev">‹</a>
     <a class="next">›</a>
     <a class="close">×</a>
-    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+    <!-- modelo del dialogo, el cual contendra el contenedor -->    
 </div>
 
 
 
-<!-- jquery -->
+<!-- recursos de jquery -->
 <script src="assets/jquery.js"></script>
 
 <!-- wow script -->
 <script src="assets/wow/wow.min.js"></script>
 
 
-<!-- boostrap -->
+<!--inicializando el uso de frameworks de font awesome para el uso de iconos -->
 <script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
 
 <!-- jquery mobile -->
 <script src="assets/mobile/touchSwipe.min.js"></script>
 <script src="assets/respond/respond.js"></script>
 
-<!-- gallery -->
+<!-- agregando gallery.min.css junto con totas las animaciones de imagenes y cuerpo de la página -->
 <script src="assets/gallery/jquery.blueimp-gallery.min.js"></script>
 
-<!-- custom script -->
+<!-- añadiendo script -->
 <script src="assets/script.js"></script>
 
 </body>
