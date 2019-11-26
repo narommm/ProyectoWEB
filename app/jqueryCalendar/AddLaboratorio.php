@@ -19,20 +19,12 @@ if (!isset($_SESSION['usuario'])) {
         $filter = new InputFilter(array('b'), array ('src'));
 
         $numero_laboratorio = $filter->process(trim($_POST['laboratorio']));
-        $usuario_peticion = $_SESSION['usuario'];
-        $hora_inicio = $filter->process(trim($_POST['appt_inicio']));
-        $hora_fin = $filter->process(trim($_POST['appt_final']));
-        $reserva_fecha = $filter->process(trim($_POST['fecha']));
-        $motivo_peticion = $filter->process(trim($_POST['peticion']));
+        $denominacion = $filter->process(trim($_POST['appt_denominacion']));
+        $costo = $filter->process(trim($_POST['appt_costo']));
+        $numero_maquinas = $filter->process(trim($_POST['appt_numero_maquinas']));
 
-        $time = time();
-        
-        $usuario_resolucion = null;
-        $hora_peticion = date("Y-m-d : H:i:s", $time);
-        $encargado = null;
-        $estado_reserva = 'pendiente';
-        
-        if($_SESSION['tipo']=="externo"){
+        //$nuevo_numero_labo = pg_query($conn, "SELECT numero_laboratorio FROM laboratorio WHERE nombre='$nombre'");
+        /*if($_SESSION['tipo']=="administrador"){
           
           require("../../conexion.php");
           $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -54,7 +46,7 @@ if (!isset($_SESSION['usuario'])) {
         $reserva_fin = $reserva_fecha." : ".$hora_fin;
         $hora_resolucion_reserva = null;
 
-
+*/
         // validate input
         $valid = true;
         if(empty($numero_laboratorio)) {
@@ -62,39 +54,36 @@ if (!isset($_SESSION['usuario'])) {
             $valid = false;
         }
         
-        if(empty($reserva_inicio)) {
-            $reserva_inicioError = "Por favor ingrese la hora de inicio de su reserva.";
+        if(empty($denominacion)) {
+            $denominacionError = "Por favor ingrese la denominacion de su laboratorio.";
             $valid = false;
         }
-        if(empty($reserva_fin)) {
-          $reserva_finError = "Por favor ingrese la hora final de su reserva.";
+        if(empty($costo)) {
+          $costoError = "Por favor ingrese el costo de reserva del laboratorio.";
           $valid = false;
         }
       
-        if(empty($reserva_fecha)) {
-          $reserva_fechaError = "Por favor ingrese la fecha de su servicio.";
+        if(empty($numero_maquinas)) {
+          $numero_maquinasError = "Por favor ingrese la cantidad de computadoras que pueden ocupar su laboratorio.";
           $valid = false;
         }
-        if(empty($motivo_peticion)) {
-        $descripcionError = "Por favor ingrese la descripcion de su reserva.";
-        $valid = false;
       }      
         // insert data
         if($valid) {
             require("../../conexion.php");
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO reserva(numero_laboratorio,usuario_peticion,usuario_resolucion,motivo_peticion,hora_peticion,reserva_inicio,reserva_fin,encargado,estado_reserva,costo_reserva,hora_resolucion_reserva) values(?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO laboratorio(numero_laboratorio,denominacion,costo,numero_maquinas) values(?,?,?,?)";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($numero_laboratorio, $usuario_peticion,$usuario_resolucion, $motivo_peticion,$hora_peticion,$reserva_inicio,$reserva_fin, $encargado,$estado_reserva, $costo_reserva,$hora_resolucion_reserva));
+            $stmt->execute(array($numero_laboratorio, $denominacion,$costo, $numero_maquinas));
             $PDO = null;
             header('location: AddLaboratorio.php');
         }
-    }
+    
   require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
   //concexion a la base para paginacion
   $conn = pg_connect("host=raja.db.elephantsql.com dbname=npyottjk user=npyottjk password=MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd");
   ///variables para paginacion
-  $total = pg_query($conn, "SELECT count (*) FROM reserva");
+  $total = pg_query($conn, "SELECT count (*) FROM laboratorio");
   $resul = 10;
   //mandar los parametros para la paginacion
   $paginacion = new Zebra_Pagination();
@@ -172,7 +161,8 @@ if (!isset($_SESSION['usuario'])) {
                   ?>
                   <li ><a href="viewCalendar.php">Calendar</a></li>  
                   <li ><a href="AddPeticion.php">Reservar</a></li>
-                 <li><a href="../../salir.php">Salir</a></li>
+                  <li ><a href="AddPeticion.php">Hamburgesa</a></li>
+                  <li><a href="../../salir.php">Salir</a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->
@@ -184,25 +174,21 @@ if (!isset($_SESSION['usuario'])) {
 <!--Login Starts-->
 
 <form class="container contactform center" role="form" method ='POST'>
-<h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
+<h2 class="text-center  wowload fadeInUp">Agrega un laboratorio</h2>
   <form class="row wowload fadeInLeftBig">      
       <div class="col-sm-3 col-sm-offset-2 col-xs-12">
+        <label >Agrega el número del nuevo laboratorio:</label>
         <input type="text" placeholder="# Laboratorio" name="laboratorio" required>
-        <input type="text" placeholder="<?php echo $_SESSION['usuario'];?>" id="usuario" name="usuario" disabled value="<?php echo $_SESSION['usuario'];?>">
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <label for="appt">Hora inicio:</label> 
-        <input type="time" id="appt_inicio" name="appt_inicio"
-                min="07:00" max="18:00" required>
-        <label for="appt">Hora final:</label>
-        <input type="time" id="appt_final" name="appt_final"
-                min="09:00" max="18:00" required> 
+        <label for="appt">Características:</label> 
+        <input type="text" id="appt_denominacion" name="appt_denominacion">
+        <label for="appt">Costo del laboratorio</label>
+        <input type="number" id="appt_costo" name="appt_costo" min="0" max="50" placeholder="25.00" required> 
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12"> 
-      <label for="start">Fecha que desea reservar</label>
-        <input type="date" id="fecha" name="fecha"
-                min="2019-01-01" max="2019-12-31" required>            
-        <textarea name="peticion" id="peticion"rows="8" placeholder="Peticion" required></textarea>
+      <label for="appt">Número de máquinas</label>
+        <input type="number" id="appt_numero_maquinas" name="appt_numero_maquinas">            
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
       </div>
   </form>

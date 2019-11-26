@@ -125,7 +125,7 @@
         <figcaption>
             <h2>Laboratorios</h2>
             <p>Mantenimiento de laboratorios<br>
-            <a href="jqueryCalendar/AddLaboratorio.php">Añade un laboratorio</a></p>            
+            <a href="app/jqueryCalendar/AddLaboratorio.php">Añade un laboratorio</a></p>            
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
