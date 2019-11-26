@@ -54,11 +54,14 @@ if (!isset($_SESSION['usuario'])) {
         else{
           $costo_reserva = 0.00;
         } 
+       
         $hora_resolucion_reserva = null;
         $reserva_inicio = $reserva_fecha." ".$hora_inicio.":00";
         $reserva_fin = $reserva_fecha." ".$hora_fin.":00";
         $hora_resolucion_reserva = null;
+       
         // validate input
+       
         $valid = true;
         if(empty($numero_laboratorio)) {
             $numero_laboratorioError = "Por favor ingrese el numero del laboratorio.";
@@ -83,12 +86,13 @@ if (!isset($_SESSION['usuario'])) {
         $valid = false;
       }     
       
-      if($hora_fin < $hora_fin || $hora_fin == $hora_fin ); {
-        $descripcionError = "Horas invalidas";
+      if($hora_inicio >= $hora_fin) {
+        $reserva_inicioError = "Horas invalidas";
         $valid = false;
       }  
+
         // insert data
-        if($valid) {
+        if($valid) { 
             require("../../conexion.php");
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "INSERT INTO reserva(numero_laboratorio,usuario_peticion,usuario_resolucion,motivo_peticion,hora_peticion,reserva_inicio,reserva_fin,encargado,estado_reserva,costo_reserva,hora_resolucion_reserva) values(?,?,?,?,?,?,?,?,?,?,?)";
@@ -203,9 +207,9 @@ if (!isset($_SESSION['usuario'])) {
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
         <h3>Formato 24 horas</h3>
         <label for="appt">Hora inicio:</label> 
-        <input type="text" id="appt_inicio" name="appt_inicio" required>
+        <input type="number" id="appt_inicio" name="appt_inicio" required>
         <label for="appt">Hora final:</label>
-        <input type="text" id="appt_final" name="appt_final" required> 
+        <input type="number" id="appt_final" name="appt_final" required> 
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12"> 
         <label for="start">Fecha que desea reservar</label>
@@ -266,11 +270,12 @@ if (!isset($_SESSION['usuario'])) {
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $PDO = null;
             if(empty($data)) {
-                header("Location: ../../index.php");
+                
+              header("Location: ../../index.php");
+            
             }
             foreach($data as $row) {
               echo'<tr>';
-              echo'<th scope="row">';
               echo'<td>'.$row['numero_laboratorio'].'</td>';
               echo'<td>'.$row['motivo_peticion'].'</td>';
               echo'<td>'.$row['hora_peticion'].'</td>';
@@ -293,8 +298,8 @@ if (!isset($_SESSION['usuario'])) {
           $stmt->execute(array($_SESSION['usuario']));
           $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
           $PDO = null;
-          if(empty($data)) {
-              header("Location: ../../index.php");
+          if(empty($data)) {    
+            header("Location: ../../index.php");
           }
           foreach($data as $row) {
             echo'<tr>';
