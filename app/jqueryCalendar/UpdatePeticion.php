@@ -1,97 +1,23 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('location: viewCalendar.php');
+    header('location: ../../index.php');
     exit();
-}else{
-    if($_SESSION['tipo']!="administrador"){
-      header('location: calendar.php');
-      exit();
-    }
 }
 ?>
-<?php
-    $id = null;
-    if(!empty($_GET['id'])) {
-        $id = $_GET['id'];
-    }
-    if($id == null) {
-        header("Location: ../../index.php");
-    }
-    
-    require("../../conexion.php");
-    if(!empty($_POST)) {
-    	  
+<?php        
 
-        // validation errors
+  require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
+  //concexion a la base para paginacion
+  $conn = pg_connect("host=raja.db.elephantsql.com dbname=npyottjk user=npyottjk password=MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd");
+  ///variables para paginacion
+  $total = pg_query($conn, "SELECT count (*) FROM reserva");
+  $resul = 10;
+  //mandar los parametros para la paginacion
+  $paginacion = new Zebra_Pagination();
+  $paginacion->records($total);
+  $paginacion->records_per_page($resul);
 
-        $encargadoError = null;
-
-        $numero_laboratorio = null;
-        $reserva_inicio = null;
-        $reserva_fin = null;
-        $reserva_fecha = null;
-        $descripcion = null;
-        $usuario_peticion = null;
-
-        $time = time();
-        
-        $usuario_resolucion = null;
-        $hora_peticion = null;
-        $encargado = null;
-        $estado_reserva = null;
-        $costo_laboratorio = null;
-
-        // post values
-        require "input-filter/class.inputfilter.php";
-        $filter = new InputFilter(array('b'), array ('src'));
-
-        $time = time();
-        $hora_resolucion = date("Y-m-d : H:i:s", $time);
-        $usuario_resolucion = $_SESSION['usuario'];
-        $encargado = $filter->process(trim($_POST['encargado']));
-        $estado_reserva = $filter->process(trim($_POST['tipo']));
-
-        // validate input
-        $valid = true;
-        if(empty($encargado)) {
-            $encargadoError = "Por favor ingrese el numero del laboratorio.";
-            $valid = false;
-        }
-        
-
-        // update data
-        
-        if($valid) {
-        	
-            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE reserva SET usuario_resolucion = ?, estado_reserva = ?, hora_resolucion_reserva = ? WHERE id = ?";
-            $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($usuario_resolucion, $estado_reserva, $hora_resolucion, $id));
-            $PDO = null;
-            header("Location: UpdatePeticion.php");
-        }
-    }
-    else {
-        // read data
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT id, numero_laboratorio,usuario_peticion, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE id = ?";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($id));
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        $PDO = null;
-        if(empty($data)) {
-            header("Location: ../../index.php");
-        }
-        $id = $data['id'];        
-        $numero_laboratorio = $data['numero_laboratorio'];
-        $usuario_peticion  = $data['usuario_peticion'];
-        $motivo_peticion = $data['motivo_peticion'];
-        $hora_peticion = $data['hora_peticion'];        
-        $reserva_inicio = $data['reserva_inicio'];
-        $reserva_fin=$data['reserva_fin'];
-        $costo_laboratorio = $data['costo_reserva'];        
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,38 +109,124 @@ if (!isset($_SESSION['usuario'])) {
       </div>
     </div>
 <!-- #Header Starts -->
-<!--Login Starts-->
-
-<form class="container contactform center" role="form" method ='POST'>
-<h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
-  <form class="row wowload fadeInLeftBig">      
-      <div class="col-sm-3 col-sm-offset-2 col-xs-12">
-        <input type="text" placeholder="# Laboratorio" name="laboratorio" required value='<?php print($numero_laboratorio); ?>' disabled>
-        <input type="text" placeholder="<?php echo $_SESSION['usuario'];?>" id="usuario" name="usuario" value='<?php print($usuario_peticion); ?>' disabled>
-      </div>
-      <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <h3>Formato 24 horas</h3>
-        <label for="appt">Inicio de la reserva:</label> 
-        <input type="text" id="appt_inicio" name="appt_inicio" required value='<?php print($reserva_inicio); ?>' disabled >
-        <label for="appt">Final de la reserva:</label>
-        <input type="text" id="appt_final" name="appt_final" required value='<?php print($reserva_fin); ?>' disabled > 
-      </div>
-      <div class="col-sm-8 col-sm-offset-2 col-xs-12">             
-        <textarea name="peticion" id="peticion"rows="8" placeholder="Peticion" required value='<?php print($motivo_peticion); ?>' disabled></textarea>
-      </div>
-      <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <input type="text" placeholder="Encargado" id="encargado" name="encargado" require>
-        <label for="tipo">Estado</label>
-        <select id="tipo" name="tipo">
-          <option value="aceptado">Aceptado</option>
-          <option value="denegado">Denegado</option>
-        </select>
-        <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
-      </div>
-  </form>
 </form>
 </div>
 <!--Login Ends-->
+
+<div class = "container">
+  <aside class="col-sm-4 col-sm-push-0">
+      <div class="widget search">
+          <form name="form1" method="GET" action = "AddPeticion.php" id="cdr">
+              <h2>Buscar Peticion</h2>
+              <h6>Por numero de laboratorio</h6>
+              <div class="form-group">
+                  <input class="form-control"  name="buscar" type="text" id="busqueda" placeholder="Busqueda" autocomplete="off">
+                  <span class="input-group-btn">
+                      <button class="btn btn-xs btn-info" type="submit" name="submit" value="Buscar"><i class="icon-search">Buscar</i></button>
+                  </span>
+              </div>
+          </form>
+      </div>
+  </aside>
+</div>
+ 
+<div class='container'>
+<table class='table'>
+  <thead class="thead-dark">
+  <tr class='warning'>
+    <th scope="col" >Laboratorio</th>
+    <th scope="col" >peticion</th>
+    <th scope="col" >Motivo</th>
+    <th scope="col" >inicio</th>
+    <th scope="col" >fin</th>
+    <th scope="col" >costo</th>
+    <th scope="col" >estado</th>
+    <th scope="col" >Opciones</th>
+    </tr>
+  </thead>
+    <tbody>
+        <?php
+    if (isset($_GET['buscar']))
+        {
+            $buscar = $_GET['buscar'];
+
+            require("../../conexion.php");
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT id ,numero_laboratorio,usuario_peticion, motivo_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE numero_laboratorio =?";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($buscar));
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $PDO = null;
+            if(empty($data)) {
+                
+              header("Location: ../../index.php");
+            
+            }
+            foreach($data as $row) {
+              echo'<tr>';
+              echo'<td>'.$row['numero_laboratorio'].'</td>';
+              echo'<td>'.$row['usuario_peticion'].'</td>';
+              echo'<td>'.$row['motivo_peticion'].'</td>';
+              echo'<td>'.$row['reserva_inicio'].'</td>';
+              echo'<td>'.$row['reserva_fin'].'</td>';
+              echo'<td>'.$row['costo_reserva'].'</td>';
+              echo'<td>'.$row['estado_reserva'].'</td>';
+              if($row['estado_reserva']=='aceptado'){
+                echo'<a class="btn btn-xs btn-success" href="peticion.php?id='.$row['id'].'" disabled >Resolver</a>';
+              
+              }else{
+                if($row['estado_reserva']=='denegado'){
+                  echo'<a class="btn btn-xs btn-danger" href="peticion.php?id='.$row['id'].'" disabled >Resolver</a>';
+                }else{
+                  echo'<a class="btn btn-xs btn-info" href="peticion.php?id='.$row['id'].'">Resolver</a>';
+                }
+              }
+              echo'</td>';
+              echo'</th>';
+            }
+          }
+        else {
+
+          require("../../conexion.php");
+          $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $sql = "SELECT id ,numero_laboratorio,usuario_peticion, motivo_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva";
+          $stmt = $PDO->prepare($sql);
+          $stmt->execute(array());
+          $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          $PDO = null;
+          if(empty($data)) {    
+            header("Location: ../../index.php");
+          }
+          foreach($data as $row) {
+            echo'<tr>';
+            echo'<td>'.$row['numero_laboratorio'].'</td>';
+            echo'<td>'.$row['usuario_peticion'].'</td>';
+            echo'<td>'.$row['motivo_peticion'].'</td>';
+            echo'<td>'.$row['reserva_inicio'].'</td>';
+            echo'<td>'.$row['reserva_fin'].'</td>';
+            echo'<td>'.$row['costo_reserva'].'</td>';
+            echo'<td>'.$row['estado_reserva'].'</td>';
+            echo'<td>';
+            if($row['estado_reserva']=='aceptado'){
+              echo'<a class="btn btn-xs btn-success" href="peticion.php?id='.$row['id'].'" disabled >Resolver</a>';
+            
+            }else{
+              if($row['estado_reserva']=='denegado'){
+                echo'<a class="btn btn-xs btn-danger" href="peticion.php?id='.$row['id'].'" disabled >Resolver</a>';
+              }else{
+                echo'<a class="btn btn-xs btn-info" href="peticion.php?id='.$row['id'].'">Resolver</a>';
+              }
+            }
+            echo'</td>';
+            echo'</tr>';
+        }
+        }
+    ?>
+    </tbody>
+    <?php $paginacion->render(); ?>
+</table>
+</div>
+
 
 <!-- Footer Starts -->
 <div class="footer text-center spacer">

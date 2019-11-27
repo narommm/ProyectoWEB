@@ -12,8 +12,8 @@ if (!isset($_SESSION['usuario'])) {
 ?>
 <?php
     $id = null;
-    if(!empty($_GET['id'])) {
-        $id = $_GET['id'];
+    if(!empty($_GET['username'])) {
+        $id = $_GET['username'];
     }
     if($id == null) {
         header("Location: ../../index.php");
@@ -25,72 +25,70 @@ if (!isset($_SESSION['usuario'])) {
 
         // validation errors
 
-        $encargadoError = null;
-
-        $numero_laboratorio = null;
-        $reserva_inicio = null;
-        $reserva_fin = null;
-        $reserva_fecha = null;
-        $descripcion = null;
-        $usuario_peticion = null;
-
-        $time = time();
-        
-        $usuario_resolucion = null;
-        $hora_peticion = null;
-        $encargado = null;
-        $estado_reserva = null;
-        $costo_laboratorio = null;
+        // validation errors
+        $nameError = null;
+        $lastNameError = null;
+        $usernameError = null;
+        $passwordError = null;
+        $emailError = null;
+        $tipoError = null;
 
         // post values
         require "input-filter/class.inputfilter.php";
         $filter = new InputFilter(array('b'), array ('src'));
 
-        $time = time();
-        $hora_resolucion = date("Y-m-d : H:i:s", $time);
-        $usuario_resolucion = $_SESSION['usuario'];
-        $encargado = $filter->process(trim($_POST['encargado']));
-        $estado_reserva = $filter->process(trim($_POST['tipo']));
+        $name = $filter->process(trim($_POST['nombre']));
+        $lastName =  $filter->process(trim($_POST['last_name']));
+        $email = $filter->process(trim($_POST['email']));
+        $tipo = $filter->process(trim($_POST['tipo']));
+        
+        $username =  null;
+        $password = null;
 
-        // validate input
         $valid = true;
-        if(empty($encargado)) {
-            $encargadoError = "Por favor ingrese el numero del laboratorio.";
+        
+        if(empty($name)) {
+            $nameError = "Por favor ingrese el nombre.";
+            $valid = false;
+        }        
+        if(empty($lastName)) {
+            $lastNameError = "Por favor ingrese su apellido.";
             $valid = false;
         }
+        if(empty($email)) {
+          $emailError = "Por favor ingrese su direccion de correo electronico.";
+          $valid = false;
+      }      
         
-
         // update data
         
         if($valid) {
         	
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE reserva SET usuario_resolucion = ?, estado_reserva = ?, hora_resolucion_reserva = ? WHERE id = ?";
+            $sql = "UPDATE usuario SET name = ?, lastname = ?,email = ? ,tipo = ? WHERE username = ?";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($usuario_resolucion, $estado_reserva, $hora_resolucion, $id));
+            $stmt->execute(array($name, $lastName, $email,$tipo, $id));
             $PDO = null;
-            header("Location: UpdatePeticion.php");
+            header("Location: AddUsuario.php");
         }
     }
     else {
         // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT id, numero_laboratorio,usuario_peticion, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE id = ?";
+        $sql = "SELECT name, lastname,username,password, email, tipo FROM usuario WHERE username = ?";
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($id));
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $PDO = null;
         if(empty($data)) {
             header("Location: ../../index.php");
-        }
-        $id = $data['id'];        
-        $numero_laboratorio = $data['numero_laboratorio'];
-        $usuario_peticion  = $data['usuario_peticion'];
-        $motivo_peticion = $data['motivo_peticion'];
-        $hora_peticion = $data['hora_peticion'];        
-        $reserva_inicio = $data['reserva_inicio'];
-        $reserva_fin=$data['reserva_fin'];
-        $costo_laboratorio = $data['costo_reserva'];        
+        }      
+        $name = $data['name'];
+        $lastName  = $data['lastname'];
+        $username = $data['username'];
+        $password  = $data['password']; 
+        $email = $data['email'];
+        $tipo = $data['tipo'];               
     }
 ?>
 <!DOCTYPE html>
@@ -99,7 +97,7 @@ if (!isset($_SESSION['usuario'])) {
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Reserva de Laboratorios</title>
+<title>Cyrus Studio</title>
 
 <!-- Google fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
@@ -126,7 +124,6 @@ if (!isset($_SESSION['usuario'])) {
 
 </head>
 <body><br><br><br><br><br><br><br><br>
-
 <div id="contact" class="spacer">
 <!-- Header Starts -->
 <div class="navbar-wrapper">
@@ -144,8 +141,8 @@ if (!isset($_SESSION['usuario'])) {
                 <span class="icon-bar"></span>
               </button>
             </div>
-             <!-- Nav Starts -->
-             <div class="navbar-collapse  collapse">
+              <!-- Nav Starts -->
+              <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="../../index.php">Home</a></li>
                  <li ><a href="../../index.php#about">Nosotros</a></li>
@@ -186,29 +183,31 @@ if (!isset($_SESSION['usuario'])) {
 <!--Login Starts-->
 
 <form class="container contactform center" role="form" method ='POST'>
-<h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
+<h2 class="text-center  wowload fadeInUp">Registrar un Usuario</h2>
   <form class="row wowload fadeInLeftBig">      
-      <div class="col-sm-3 col-sm-offset-2 col-xs-12">
-        <input type="text" placeholder="# Laboratorio" name="laboratorio" required value='<?php print($numero_laboratorio); ?>' disabled>
-        <input type="text" placeholder="<?php echo $_SESSION['usuario'];?>" id="usuario" name="usuario" value='<?php print($usuario_peticion); ?>' disabled>
-      </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <h3>Formato 24 horas</h3>
-        <label for="appt">Inicio de la reserva:</label> 
-        <input type="text" id="appt_inicio" name="appt_inicio" required value='<?php print($reserva_inicio); ?>' disabled >
-        <label for="appt">Final de la reserva:</label>
-        <input type="text" id="appt_final" name="appt_final" required value='<?php print($reserva_fin); ?>' disabled > 
-      </div>
-      <div class="col-sm-8 col-sm-offset-2 col-xs-12">             
-        <textarea name="peticion" id="peticion"rows="8" placeholder="Peticion" required value='<?php print($motivo_peticion); ?>' disabled></textarea>
-      </div>
-      <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <input type="text" placeholder="Encargado" id="encargado" name="encargado" require>
-        <label for="tipo">Estado</label>
-        <select id="tipo" name="tipo">
-          <option value="aceptado">Aceptado</option>
-          <option value="denegado">Denegado</option>
+        <label for="username">Ingrese Usuario:</label> 
+        <input type="text" placeholder="Username" id="username" name="username" required  value='<?php print($username); ?>' disabled>
+        <label for="nombre">Ingrese Nombre:</label> 
+        <input type="text" placeholder="Ej. Juan" id="nombre" name="nombre" required value='<?php print($name); ?>'>
+        <label for="last_name">Ingrese Apellidos:</label> 
+        <input type="text" placeholder="Ej. Perez" id="last_name" name="last_name" required value='<?php print($lastName); ?>'>
+        <label for="password">Ingrese Contraseña:</label> 
+        <input type="password" placeholder="*******" id="password" name="password" required value='<?php print($password); ?>' disabled>
+        <label for="password2">Confirme Contraseña:</label> 
+        <input type="password" placeholder="*******" id="password2" name="password2" required value='<?php print($password); ?>' disabled>
+        <label for="email">Ingrese email:</label> 
+        <input type="email" placeholder="ejemplo@ejemplo.com" id="email" name="email" required value='<?php print($email); ?>' >
+        <label for="tipo">Ingrese tipo:</label> 
+        <div class="form-group">
+        <select id="tipo" name="tipo">value='<?php print($tipo); ?>'
+        <option value='<?php print($tipo); ?>'><?php print($tipo); ?></option>
+          <option value="estudiante">Estudiante</option>
+          <option value="docente">Profesor o docente</option>
+          <option value="externo">Persona ajena a la institucion</option>
+          <option value="administrador">Usuario Administrador</option>
         </select>
+        </div>
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
       </div>
   </form>
@@ -219,7 +218,7 @@ if (!isset($_SESSION['usuario'])) {
 <!-- Footer Starts -->
 <div class="footer text-center spacer">
 <p class="wowload flipInX"><a href="#"><i class="fa fa-facebook fa-2x"></i></a> <a href="#"><i class="fa fa-instagram fa-2x"></i></a> <a href="#"><i class="fa fa-twitter fa-2x"></i></a> <a href="#"><i class="fa fa-flickr fa-2x"></i></a> </p>
-Copyright 2019 Universidad Centroamericana José Simeón Cañas. All rights reserved.
+Copyright 2014 Cyrus Creative Studio. All rights reserved.
 </div>
 <!-- # Footer Ends -->
 <a href="#home" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>

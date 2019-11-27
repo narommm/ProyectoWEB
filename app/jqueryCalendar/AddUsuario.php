@@ -1,9 +1,15 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('location: ../../index.php');
+    header('location: viewCalendar.php');
     exit();
+}else{
+    if($_SESSION['tipo']!="administrador"){
+      header('location: calendar.php');
+      exit();
+    }
 }
+
 ?>
 <?php        
         if(!empty($_POST)) {
@@ -29,35 +35,23 @@ if (!isset($_SESSION['usuario'])) {
         $contra_encrip = md5($password);
         $email = $filter->process(trim($_POST['email']));
         $tipo = $filter->process(trim($_POST['tipo']));
-
-        echo($name);
-        echo($lastName);
-        echo($username);
-        echo($password);
-        echo($email);
-        echo($tipo);
         
         // validate input
         $valid = true;
         
         if(empty($name)) {
-          echo("9");
             $nameError = "Por favor ingrese el nombre.";
             $valid = false;
         }        
         if(empty($lastName)) {
-          echo("8");
             $lastNameError = "Por favor ingrese su apellido.";
             $valid = false;
         }
         if(empty($username)) {
-          echo("7");
-
           $usernameError = "Por favor ingrese el nombre de usuario.";
           $valid = false;
         }
         if(empty($password)) {
-          echo("6");
           $passwordError = "Por favor ingrese su contraseña.";
           $valid = false;
         }
@@ -66,32 +60,21 @@ if (!isset($_SESSION['usuario'])) {
           $valid = false;
         }
         if(empty($email)) {
-          echo("5");
           $emailError = "Por favor ingrese su direccion de correo electronico.";
           $valid = false;
       }      
         // insert data
-        echo("1");
+
         
         if($valid) {
             require("../../conexion.php");
-            echo("a");
-
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo("b");
-
             $sql = "INSERT INTO usuario(name,lastName,username,password,email,tipo) values(?,?,?,?,?,?)";
             $stmt = $PDO->prepare($sql);
-            echo("c");
-
             $stmt->execute(array($name, $lastName,$username, $contra_encrip,$email,$tipo));
-            echo("d");
-
             $PDO = null;
-            echo("f");
             //header('location: AddUsuario.php');
         }
-        echo("3");
     }
   require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
   //concexion a la base para paginacion
@@ -155,30 +138,40 @@ if (!isset($_SESSION['usuario'])) {
                 <span class="icon-bar"></span>
               </button>
             </div>
-            <!-- Nav Starts -->
-            <div class="navbar-collapse  collapse">
+              <!-- Nav Starts -->
+              <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="../../index.php">Home</a></li>
-                 <li ><a href="../../index.php/#about">About</a></li>
+                 <li ><a href="../../index.php#about">Nosotros</a></li>
                  <?php
                     if (!isset($_SESSION['usuario'])) {
-                       //<li ><a href="calendar.php">Calendar</a></li>
+                      ?>
+                       <li ><a href="viewCalendar.php">Calendario</a></li>
+                       <?php
                     }
                     else{
                       if($_SESSION['tipo']=="administrador"){
-                         //<li ><a href="calendar.php">Calendar</a></li>
+                        ?>
+                          <li ><a href="calendarADM.php">Calendario</a></li>
+                          <li ><a href="AddPeticion.php">Reservar</a></li>
+                          <li ><a href="peticion.php">Peticion</a></li>
+                          <li ><a href="AddUsuario.php">Registrar usuario</a></li>
+                          <li ><a href="AddLaboratorio.php">Registrar laboratorio</a></li>
+                         <?php
                       }
                       else{
-                         //<li ><a href="calendar.php">Calendar</a></li>
+                        ?>
+                          <li ><a href="calendar.php">Calendario</a></li>
+                          <li ><a href="AddPeticion.php">Reservar</a></li>
+                          <?php
                       }
                     }
-                  ?>
-                  <li ><a href="viewCalendar.php">Calendar</a></li>  
-                  <li ><a href="AddPeticion.php">Reservar</a></li>
-                 <li><a href="../../salir.php">Salir</a></li>
+                  ?>        
+                  <li><a href="../../salir.php"><?php echo('Salir ('.$_SESSION['usuario'].')') ?></a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->
+
           </div>
         </div>
       </div>
@@ -217,7 +210,78 @@ if (!isset($_SESSION['usuario'])) {
 </form>
 </div>
 <!--Login Ends-->
+<div class='container'>
+<table class='table'>
+  <thead class="thead-dark">
+  <tr class='warning'>
+    <th scope="col" >Nombre</th>
+    <th scope="col" >Apellido</th>
+    <th scope="col" >Usuario</th>
+    <th scope="col" >Rol</th>
+    <th scope="col" >Opciones</th>
+    </tr>
+  </thead>
+    <tbody>
+        <?php
+    if (isset($_GET['buscar']))
+        {
+            $buscar = $_GET['buscar'];
 
+            require("../../conexion.php");
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT name,lastname, username,tipo FROM usuario WHERE username like '%".$buscar."%'";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($buscar));
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $PDO = null;
+            if(empty($data)) {
+                
+              header("Location: ../../index.php");
+            
+            }
+            foreach($data as $row) {
+              echo'<tr>';
+              echo'<td>'.$row['name'].'</td>';
+              echo'<td>'.$row['lastname'].'</td>';
+              echo'<td>'.$row['username'].'</td>';
+              echo'<td>'.$row['tipo'].'</td>';
+              echo'<td>';
+              echo'<a class="btn btn-xs btn-info" href="UpdateUsuario.php?username='.$row['username'].'" >UPDATE</a>';
+              echo'<a class="btn btn-xs btn-danger" href="DeleteUsuario.php?username='.$row['username'].'" >DELETE</a>';
+              echo'</td>';
+              echo'</th>';
+            }
+          }
+        else {
+
+          require("../../conexion.php");
+          $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $sql = "SELECT name,lastname, username,tipo FROM usuario";
+          $stmt = $PDO->prepare($sql);
+          $stmt->execute(array());
+          $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          $PDO = null;
+          if(empty($data)) {    
+            header("Location: ../../index.php");
+          }
+          foreach($data as $row) {
+            echo'<tr>';
+            echo'<td>'.$row['name'].'</td>';
+            echo'<td>'.$row['lastname'].'</td>';
+            echo'<td>'.$row['username'].'</td>';
+            echo'<td>'.$row['tipo'].'</td>';
+            echo'<td>';
+            echo'<a class="btn btn-xs btn-info" href="UpdateUsuario.php?username='.$row['username'].'" >UPDATE</a>';
+            echo'<a class="btn btn-xs btn-danger" href="DeleteUsuario.php?username='.$row['username'].'" >DELETE</a>';
+            echo'</td>';
+            echo'</tr>';
+        }
+        }
+    ?>
+    </tbody>
+    <?php $paginacion->render(); ?>
+</table>
+</div>
 
 
 <!-- Footer Starts -->

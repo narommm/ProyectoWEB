@@ -173,14 +173,36 @@ if (!isset($_SESSION['usuario'])) {
             </div>
 
 
-            <!-- Nav Starts -->
-            <div class="navbar-collapse  collapse">
+             <!-- Nav Starts -->
+             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="../../index.php">Home</a></li>
-                 <li ><a href="../../#about">Nosotros</a></li>
-                 <li ><a href="calendar.php">Calendario</a></li>
-                 <li ><a href="AddPeticion.php">Reservar</a></li>
-                 <li><a href="../../login.php">Login</a></li>
+                 <li ><a href="../../index.php#about">Nosotros</a></li>
+                 <?php
+                    if (!isset($_SESSION['usuario'])) {
+                      ?>
+                       <li ><a href="viewCalendar.php">Calendario</a></li>
+                       <?php
+                    }
+                    else{
+                      if($_SESSION['tipo']=="administrador"){
+                        ?>
+                          <li ><a href="calendarADM.php">Calendario</a></li>
+                          <li ><a href="AddPeticion.php">Reservar</a></li>
+                          <li ><a href="peticion.php">Peticion</a></li>
+                          <li ><a href="AddUsuario.php">Registrar usuario</a></li>
+                          <li ><a href="AddLaboratorio.php">Registrar laboratorio</a></li>
+                         <?php
+                      }
+                      else{
+                        ?>
+                          <li ><a href="calendar.php">Calendario</a></li>
+                          <li ><a href="AddPeticion.php">Reservar</a></li>
+                          <?php
+                      }
+                    }
+                  ?>        
+                  <li><a href="../../salir.php"><?php echo('Salir ('.$_SESSION['usuario'].')') ?></a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->

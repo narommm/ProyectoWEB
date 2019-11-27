@@ -165,31 +165,40 @@ if (!isset($_SESSION['usuario'])) {
                 <span class="icon-bar"></span>
               </button>
             </div>
-            <!-- Nav Starts -->
-            <div class="navbar-collapse  collapse">
+             <!-- Nav Starts -->
+             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="../../index.php">Home</a></li>
-                 <li ><a href="../../index.php/#about">Nosotros</a></li>
+                 <li ><a href="../../index.php#about">Nosotros</a></li>
                  <?php
                     if (!isset($_SESSION['usuario'])) {
-                       //<li ><a href="viewCalendar.php">Calendario</a></li>
+                      ?>
+                       <li ><a href="viewCalendar.php">Calendario</a></li>
+                       <?php
                     }
                     else{
                       if($_SESSION['tipo']=="administrador"){
-                         //<li ><a href="calendarADM.php">Calendario</a></li>
-                         //<li ><a href="peticion.php">Peticion</a></li
+                        ?>
+                          <li ><a href="calendarADM.php">Calendario</a></li>
+                          <li ><a href="AddPeticion.php">Reservar</a></li>
+                          <li ><a href="peticion.php">Peticion</a></li>
+                          <li ><a href="AddUsuario.php">Registrar usuario</a></li>
+                          <li ><a href="AddLaboratorio.php">Registrar laboratorio</a></li>
+                         <?php
                       }
                       else{
-                         //<li ><a href="calendar.php">Calendario</a></li>
+                        ?>
+                          <li ><a href="calendar.php">Calendario</a></li>
+                          <li ><a href="AddPeticion.php">Reservar</a></li>
+                          <?php
                       }
                     }
-                  ?>
-                  <li ><a href="AddPeticion.php">Reservar</a></li>
-                  <li ><a href="AddUsuario.php">Registrar usuario</a></li>
-                 <li><a href="../../salir.php">Salir</a></li>
+                  ?>        
+                  <li><a href="../../salir.php"><?php echo('Salir ('.$_SESSION['usuario'].')') ?></a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->
+
           </div>
         </div>
       </div>
@@ -235,7 +244,7 @@ if (!isset($_SESSION['usuario'])) {
               <div class="form-group">
                   <input class="form-control"  name="buscar" type="text" id="busqueda" placeholder="Busqueda" autocomplete="off">
                   <span class="input-group-btn">
-                      <button class="btn btn-danger" type="submit" name="submit" value="Buscar"><i class="icon-search"></i></button>
+                      <button class="btn btn-xs btn-info" type="submit" name="submit" value="Buscar"><i class="icon-search">Buscar</i></button>
                   </span>
               </div>
           </form>
@@ -254,6 +263,7 @@ if (!isset($_SESSION['usuario'])) {
     <th scope="col" >fin</th>
     <th scope="col" >costo</th>
     <th scope="col" >estado</th>
+    <th scope="col" >Opciones</th>
     </tr>
   </thead>
     <tbody>
@@ -264,9 +274,9 @@ if (!isset($_SESSION['usuario'])) {
 
             require("../../conexion.php");
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "SELECT numero_laboratorio, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE numero_laboratorio like %?%";
+            $sql = "SELECT id, numero_laboratorio, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE numero_laboratorio =? AND usuario_peticion = ?";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($buscar));
+            $stmt->execute(array($buscar,$_SESSION['usuario']));
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $PDO = null;
             if(empty($data)) {
@@ -283,8 +293,16 @@ if (!isset($_SESSION['usuario'])) {
               echo'<td>'.$row['reserva_fin'].'</td>';
               echo'<td>'.$row['costo_reserva'].'</td>';
               echo'<td>'.$row['estado_reserva'].'</td>';
-              //$data .= "<a class='btn btn-xs btn-primary' href='modificar_marcas.php?id_marca=$row[id_marca]'>ACTUALIZAR</a>&nbsp;";
-              //$data .= "<a class='btn btn-xs btn-danger' href='eliminar_marcas.php?id_marca=$row[id_marca]'>ELIMINAR</a>";
+              if($row['estado_reserva']=='aceptado'){
+                echo'<a class="btn btn-xs btn-success" href="DeletePeticion.php?id='.$row['id'].'" disabled >ELIMINAR</a>';
+              
+              }else{
+                if($row['estado_reserva']=='denegado'){
+                  echo'<a class="btn btn-xs btn-danger" href="DeletePeticion.php?id='.$row['id'].'" disabled >ELIMINAR</a>';
+                }else{
+                  echo'<a class="btn btn-xs btn-info" href="DeletePeticion.php?id='.$row['id'].'">ELIMINAR</a>';
+                }
+              }
               echo'</td>';
               echo'</th>';
             }
@@ -293,7 +311,7 @@ if (!isset($_SESSION['usuario'])) {
 
           require("../../conexion.php");
           $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $sql = "SELECT numero_laboratorio, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE usuario_peticion = ?";
+          $sql = "SELECT id ,numero_laboratorio, motivo_peticion, hora_peticion,reserva_inicio,reserva_fin,costo_reserva,estado_reserva FROM reserva WHERE usuario_peticion = ?";
           $stmt = $PDO->prepare($sql);
           $stmt->execute(array($_SESSION['usuario']));
           $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -310,8 +328,17 @@ if (!isset($_SESSION['usuario'])) {
             echo'<td>'.$row['reserva_fin'].'</td>';
             echo'<td>'.$row['costo_reserva'].'</td>';
             echo'<td>'.$row['estado_reserva'].'</td>';
-            //$data .= "<a class='btn btn-xs btn-primary' href='modificar_marcas.php?id_marca=$row[id_marca]'>ACTUALIZAR</a>&nbsp;";
-            //$data .= "<a class='btn btn-xs btn-danger' href='eliminar_marcas.php?id_marca=$row[id_marca]'>ELIMINAR</a>";
+            echo'<td>';
+            if($row['estado_reserva']=='aceptado'){
+              echo'<a class="btn btn-xs btn-success" href="DeletePeticion.php?id='.$row['id'].'" disabled >ELIMINAR</a>';
+            
+            }else{
+              if($row['estado_reserva']=='denegado'){
+                echo'<a class="btn btn-xs btn-danger" href="DeletePeticion.php?id='.$row['id'].'" disabled >ELIMINAR</a>';
+              }else{
+                echo'<a class="btn btn-xs btn-info" href="DeletePeticion.php?id='.$row['id'].'">ELIMINAR</a>';
+              }
+            }
             echo'</td>';
             echo'</tr>';
         }

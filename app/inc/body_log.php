@@ -28,7 +28,7 @@
                  <li ><a href="#about">Nosotros</a></li>
                  <li ><a href="app/jqueryCalendar/calendar.php">Calendario</a></li>
                  <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
-                 <li><a href="salir.php">Salir</a></li>
+                 <li><a href="salir.php"><?php echo('Salir ('.$_SESSION['usuario'].')') ?></a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->

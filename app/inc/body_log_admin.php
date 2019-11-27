@@ -19,21 +19,39 @@
               </button>
 
             </div>
-
-
-            <!-- Nav Starts -->
-            <div class="navbar-collapse  collapse">
+             <!-- Nav Starts -->
+             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
                  <li class="active"><a href="index.php">Home</a></li>
                  <li ><a href="#about">Nosotros</a></li>
-                 <li ><a href="app/jqueryCalendar/calendar.php">Calendario</a></li>
-                 <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
-                 <li ><a href="app/jqueryCalendar/AddUsuario.php">Registrar Usuario</a></li>
-                 <li><a href="salir.php">Salir</a></li>
+                 <?php
+                    if (!isset($_SESSION['usuario'])) {
+                      ?>
+                       <li ><a href="app/jqueryCalendar/viewCalendar.php">Calendario</a></li>
+                       <?php
+                    }
+                    else{
+                      if($_SESSION['tipo']=="administrador"){
+                        ?>
+                          <li ><a href="app/jqueryCalendar/calendarADM.php">Calendario</a></li>
+                          <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
+                          <li ><a href="app/jqueryCalendar/peticion.php">Peticion</a></li>
+                          <li ><a href="app/jqueryCalendar/AddUsuario.php">Registrar usuario</a></li>
+                          <li ><a href="app/jqueryCalendar/AddLaboratorio.php">Registrar laboratorio</a></li>
+                         <?php
+                      }
+                      else{
+                        ?>
+                          <li ><a href="app/jqueryCalendar/viewCalendar.php">Calendario</a></li>
+                          <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
+                          <?php
+                      }
+                    }
+                  ?>        
+                  <li><a href="salir.php"><?php echo('Salir ('.$_SESSION['usuario'].')') ?></a></li>
               </ul>
             </div>
             <!-- #Nav Ends -->
-
           </div>
         </div>
 
