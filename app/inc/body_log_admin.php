@@ -35,7 +35,7 @@
                         ?>
                           <li ><a href="app/jqueryCalendar/calendarADM.php">Calendario</a></li>
                           <li ><a href="app/jqueryCalendar/AddPeticion.php">Reservar</a></li>
-                          <li ><a href="app/jqueryCalendar/peticion.php">Peticion</a></li>
+                          <li ><a href="app/jqueryCalendar/UpdatePeticion.php">Peticion</a></li>
                           <li ><a href="app/jqueryCalendar/AddUsuario.php">Registrar usuario</a></li>
                           <li ><a href="app/jqueryCalendar/AddLaboratorio.php">Registrar laboratorio</a></li>
                          <?php

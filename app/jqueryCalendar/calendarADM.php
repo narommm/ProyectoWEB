@@ -193,7 +193,7 @@ if (!isset($_SESSION['usuario'])) {
                         ?>
                           <li ><a href="calendarADM.php">Calendario</a></li>
                           <li ><a href="AddPeticion.php">Reservar</a></li>
-                          <li ><a href="peticion.php">Peticion</a></li>
+                          <li ><a href="UpdatePeticion.php">Peticion</a></li>
                           <li ><a href="AddUsuario.php">Registrar usuario</a></li>
                           <li ><a href="AddLaboratorio.php">Registrar laboratorio</a></li>
                          <?php
