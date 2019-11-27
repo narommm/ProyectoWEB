@@ -78,7 +78,6 @@
     <h4><i class="fa fa-flag"></i> Introducción</h4>
       <!-- Montando un parrafo  -->
     <p>Bienvenido al sistema de reservas de la universidad José Simeón Cañas (UCA) en el cual podrá solicitar el uso de nuestras instalaciones. Contamos con # laboratorios a su disposición cuyos horarios hábiles son de lunes a  viernes desde las 7:00 am hasta las 7:00 pm. Además de días sábados de 7:00 am a 3:00 pm.</p>
-    
   </div>
    <!-- Agregando un nuevo div a la par de nuetra intro, con información importante-->
   <div class="col-sm-6 wowload fadeInRight">

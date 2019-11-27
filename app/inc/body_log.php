@@ -2,14 +2,13 @@
 <!-- asignando nombre a clase para animacoones -->
 <div class="topbar animated fadeInLeftBig"></div>
 
-<!-- Header Starts -->
+<!-- Header iniciado -->
 <div class="navbar-wrapper">
       <div class="container">
-
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
         <!-- creando contenedor -->
           <div class="container">
-          <!-- declarando cabecera del comtenedor -->
+          <!-- declarando cabecera del contenedor con una clase header-->
             <div class="navbar-header">
               <!-- Iniciando Logo en index -->
               <a class="navbar-brand" href="#index.php"><img src="images/LOGO1.png" alt="logo"></a>

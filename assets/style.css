@@ -265,7 +265,8 @@ p{
 }
 
 .contactform textarea,.contactform input{
-	width: 100%;padding:1em;
+	width: 100%;
+	padding:1em;
 	border:1px solid #ccc;
 	margin-bottom: 1em;
 	border-radius: 0;

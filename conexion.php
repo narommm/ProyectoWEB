@@ -1,5 +1,5 @@
 <?php
-/* implementandocaractetistica de la base datos tales como link, usuario, contraseña, y nombre de la base*/
+/* implementando caractetistica de la base datos tales como link, usuario, contraseña, y nombre de la base*/
     $host = 'raja.db.elephantsql.com';
     $user = 'npyottjk';
     $pass = 'MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd';

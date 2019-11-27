@@ -1,5 +1,4 @@
 <?php
-
 /* requiriendo de recuersos de la conexión para presentar nueva vista */
 require("conexion.php");
 session_start();
@@ -182,7 +181,7 @@ Copyright 2014 Cyrus Creative Studio. All rights reserved.
 <!--inicializando el uso de frameworks de font awesome para el uso de iconos -->
 <script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
 
-<!-- jquery mobile -->
+<!--animaciones de jquery mobile -->
 <script src="assets/mobile/touchSwipe.min.js"></script>
 <script src="assets/respond/respond.js"></script>
 

@@ -30,7 +30,7 @@ if (!isset($_SESSION['usuario'])) {
 <link rel="stylesheet" href="../../assets/gallery/blueimp-gallery.min.css">
 
 <!-- favicon -->
-<link rel="shortcut icon" href="../../images/favicon.jpg" type="image/x-icon">
+<link rel="shortcut icon" href="../../images/FAVIVON32.png" type="image/x-icon">
 <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
 
 
