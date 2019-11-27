@@ -1,7 +1,7 @@
 
 <?php
 
-//load.php
+//mostrando registros de la base de datos
 $host = 'raja.db.elephantsql.com';
 $user = 'npyottjk';
 $pass = 'MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd';
@@ -17,7 +17,7 @@ $statement = $connect->prepare($query);
 $statement->execute();
 
 $result = $statement->fetchAll();
-
+/* para cada registro se hace un proceso de muestra */
 foreach($result as $row)
 {
  $data[] = array(
