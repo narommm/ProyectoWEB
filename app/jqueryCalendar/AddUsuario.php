@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('location: viewCalendar.php');
+    header('location: ../../index.php');
     exit();
 }else{
     if($_SESSION['tipo']!="administrador"){
-      header('location: calendar.php');
+      header('location: ../../index.php');
       exit();
     }
 }
@@ -94,7 +94,7 @@ if (!isset($_SESSION['usuario'])) {
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Cyrus Studio</title>
+<title>Reserva de Laboratorios</title>
 
 <!-- Google fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
@@ -210,6 +210,22 @@ if (!isset($_SESSION['usuario'])) {
 </form>
 </div>
 <!--Login Ends-->
+<div class = "container">
+  <aside class="col-sm-4 col-sm-push-0">
+      <div class="widget search">
+          <form name="form1" method="GET" action = "AddUsuario.php" id="cdr">
+              <h2>Buscar usuario</h2>
+              <h6>Por nombre de usuario</h6>
+              <div class="form-group">
+                  <input class="form-control"  name="buscar" type="text" id="busqueda" placeholder="Busqueda" autocomplete="off">
+                  <span class="input-group-btn">
+                      <button class="btn btn-xs btn-info" type="submit" name="submit" value="Buscar"><i class="icon-search">Buscar</i></button>
+                  </span>
+              </div>
+          </form>
+      </div>
+  </aside>
+</div>
 <div class='container'>
 <table class='table'>
   <thead class="thead-dark">
@@ -223,21 +239,41 @@ if (!isset($_SESSION['usuario'])) {
   </thead>
     <tbody>
         <?php
-    if (isset($_GET['buscar']))
-        {
+    if (isset($_GET['buscar'])){
             $buscar = $_GET['buscar'];
 
             require("../../conexion.php");
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "SELECT name,lastname, username,tipo FROM usuario WHERE username like '%".$buscar."%'";
+            $sql = "SELECT name,lastname, username,tipo FROM usuario WHERE username LIKE '%".$buscar."%'";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($buscar));
+            $stmt->execute(array());
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $PDO = null;
-            if(empty($data)) {
-                
+            if(empty($data)) {                
+              header("Location: ../../index.php");            
+            }
+            foreach($data as $row) {
+              echo'<tr>';
+              echo'<td>'.$row['name'].'</td>';
+              echo'<td>'.$row['lastname'].'</td>';
+              echo'<td>'.$row['username'].'</td>';
+              echo'<td>'.$row['tipo'].'</td>';
+              echo'<td>';
+              echo'<a class="btn btn-xs btn-info spacing-btn-toRigth" href="UpdateUsuario.php?username='.$row['username'].'" >UPDATE</a>';
+              echo'<a class="btn btn-xs btn-danger" href="DeleteUsuario.php?username='.$row['username'].'" >DELETE</a>';
+              echo'</td>';
+              echo'</th>';
+            }
+          }else {
+            require("../../conexion.php");
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT name,lastname, username,tipo FROM usuario";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array());
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $PDO = null;
+            if(empty($data)) {    
               header("Location: ../../index.php");
-            
             }
             foreach($data as $row) {
               echo'<tr>';
@@ -249,34 +285,9 @@ if (!isset($_SESSION['usuario'])) {
               echo'<a class="btn btn-xs btn-info" href="UpdateUsuario.php?username='.$row['username'].'" >UPDATE</a>';
               echo'<a class="btn btn-xs btn-danger" href="DeleteUsuario.php?username='.$row['username'].'" >DELETE</a>';
               echo'</td>';
-              echo'</th>';
+              echo'</tr>';
             }
           }
-        else {
-
-          require("../../conexion.php");
-          $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $sql = "SELECT name,lastname, username,tipo FROM usuario";
-          $stmt = $PDO->prepare($sql);
-          $stmt->execute(array());
-          $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          $PDO = null;
-          if(empty($data)) {    
-            header("Location: ../../index.php");
-          }
-          foreach($data as $row) {
-            echo'<tr>';
-            echo'<td>'.$row['name'].'</td>';
-            echo'<td>'.$row['lastname'].'</td>';
-            echo'<td>'.$row['username'].'</td>';
-            echo'<td>'.$row['tipo'].'</td>';
-            echo'<td>';
-            echo'<a class="btn btn-xs btn-info" href="UpdateUsuario.php?username='.$row['username'].'" >UPDATE</a>';
-            echo'<a class="btn btn-xs btn-danger" href="DeleteUsuario.php?username='.$row['username'].'" >DELETE</a>';
-            echo'</td>';
-            echo'</tr>';
-        }
-        }
     ?>
     </tbody>
     <?php $paginacion->render(); ?>

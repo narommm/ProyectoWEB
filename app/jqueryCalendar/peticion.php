@@ -203,7 +203,7 @@ if (!isset($_SESSION['usuario'])) {
         <textarea name="peticion" id="peticion"rows="8" placeholder="Peticion" required value='<?php print($motivo_peticion); ?>' disabled></textarea>
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-        <input type="text" placeholder="Encargado" id="encargado" name="encargado" require>
+        <input type="text" placeholder="Encargado" id="encargado" name="encargado" required>
         <label for="tipo">Estado</label>
         <select id="tipo" name="tipo">
           <option value="aceptado">Aceptado</option>

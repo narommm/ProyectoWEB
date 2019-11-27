@@ -403,4 +403,7 @@ p{
 		margin-top: 2em;
 		padding-bottom: 2em;
 	}
+	.spacing-btn-toRigth{
+		margin-right: 20em; 
+	}
 }

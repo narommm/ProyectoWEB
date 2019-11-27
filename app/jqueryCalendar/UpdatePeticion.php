@@ -3,7 +3,13 @@ session_start();
 if (!isset($_SESSION['usuario'])) {
     header('location: ../../index.php');
     exit();
+}else{
+    if($_SESSION['tipo']!="administrador"){
+      header('location: ../../index.php');
+      exit();
+    }
 }
+
 ?>
 <?php        
 

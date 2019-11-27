@@ -8,6 +8,7 @@ if (isset($_SESSION['nombre'])) {
     exit();
     }
 //Activamos todas las notificaciones de error posibles
+
 error_reporting (E_ALL);
 
 //Definimos el tratamiento de errores no controlados

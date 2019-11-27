@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('location: viewCalendar.php');
+    header('location: ../../index.php');
     exit();
 }else{
     if($_SESSION['tipo']!="administrador"){
-      header('location: calendar.php');
+      header('location: ../../index.php');
       exit();
     }
 }
@@ -97,7 +97,7 @@ if (!isset($_SESSION['usuario'])) {
 <meta charset="UTF-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>Cyrus Studio</title>
+<title>Reserva de Laboratorios</title>
 
 <!-- Google fonts -->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
