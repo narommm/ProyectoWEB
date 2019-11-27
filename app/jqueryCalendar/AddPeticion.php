@@ -1,4 +1,5 @@
 <?php
+/* verificanco inicio de sesion con credenciales y mostrando calendario con reservas*/
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('location: viewCalendar.php');
@@ -8,21 +9,21 @@ if (!isset($_SESSION['usuario'])) {
 <?php        
         if(!empty($_POST)) {
 
-        // validation errors
+        // validacion de errores
         $numero_laboratorioError = null;
         $reserva_inicioError = null;
         $reserva_finError = null;
         $reserva_fechaError = null;
         $descripcionError = null;
 
-        // post values
+        // despues del valor
         require "input-filter/class.inputfilter.php";
         $filter = new InputFilter(array('b'), array ('src'));
 
         $numero_laboratorio = $filter->process(trim($_POST['nombre_servicio']));
         $descripcion_servicio = $filter->process(trim($_POST['descripcion_servicio']));
 
-        // validate input
+        // calidando la entrada 
         $valid = true;
         if(empty($nombre_servicio)) {
             $nombre_servicioError = "Por favor ingrese el nombre del servico.";
@@ -34,7 +35,7 @@ if (!isset($_SESSION['usuario'])) {
             $valid = false;
         }
         
-        // insert data
+        // insertando daos a base de datos
         if($valid) {
             require("../../conexion.php");
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -67,27 +68,27 @@ $paginacion->records_per_page($resul);
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Cyrus Studio</title>
 
-<!-- Google fonts -->
+<!-- requiriendo Google fonts para poder usar el directorio iteractivo que nos facilitara el uso de fuentes de la web-->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
 
-<!-- font awesome -->
+<!--inicializando el uso de frameworks de font awesome para el uso de iconos -->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-<!-- bootstrap -->
+<!-- usando la biblioteca bootstrap para el suo de plantilas, formularios, botones y cuadros de nuestra página-->
 <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
 
-<!-- animate.css -->
+<!-- conectando animate.css para las animaciones y configuraciones de la página-->
 <link rel="stylesheet" href="../../assets/animate/animate.css" />
 <link rel="stylesheet" href="../../assets/animate/set.css" />
 
-<!-- gallery -->
+<!-- agregando gallery.min.css junto con totas las animaciones de imagenes y cuerpo de la página -->
 <link rel="stylesheet" href="../../assets/gallery/blueimp-gallery.min.css">
 
-<!-- favicon -->
+<!-- requiriendo los iconos de favicon y las imagenes que seran de utilidad en nuestra web -->
 <link rel="shortcut icon" href="../../images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
 
-
+<!--utilizando los estilos de animacion de css-->
 <link rel="stylesheet" href="../../assets/style.css">
 
 </head>
@@ -99,19 +100,21 @@ $paginacion->records_per_page($resul);
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
           <div class="container">
             <div class="navbar-header">
-              <!-- Logo Starts -->
+              <!-- insertando Logo -->
               <a class="navbar-brand" href="index.php"><img src="../../images/LOGO1.png" alt="logo"></a>
-              <!-- #Logo Ends -->
+              <!-- creando boton -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
+                <!-- insertando iconos de span -->
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
             </div>
-            <!-- Nav Starts -->
+            <!--iniciando nav -->
             <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
+              <!-- creando acceso a inicio y un acerca de  -->
                  <li class="active"><a href="../../index.php">Home</a></li>
                  <li ><a href="../../index.php/#about">About</a></li>
                  <?php
@@ -127,19 +130,20 @@ $paginacion->records_per_page($resul);
                       }
                     }
                   ?>
+                  <!--  refdireccionando a calendar y a solicitud de reservas -->
                   <li ><a href="viewCalendar.php">Calendar</a></li>  
                   <li ><a href="AddPeticion.php">Reservar</a></li>
                  <li><a href="../../salir.php">Salir</a></li>
               </ul>
             </div>
-            <!-- #Nav Ends -->
+            <!-- fin de navs-->
           </div>
         </div>
       </div>
     </div>
-<!-- #Header Starts -->
-<!--Login Starts-->
-
+<!-- ininciando header-->
+<!--iniciando login-->
+C<!-- creando un fomulario de registro de reserva de laboratorio -->
 <form class="container contactform center" role="form" method ='POST'>
 <h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
   <form class="row wowload fadeInLeftBig">      
@@ -168,54 +172,54 @@ $paginacion->records_per_page($resul);
 
 </form>
 </div>
-<!--Login Ends-->
+<!--finalizando login-->
 
 
 
-<!-- Footer Starts -->
+<!-- iniciando pie de pagina -->
 <div class="footer text-center spacer">
 <p class="wowload flipInX"><a href="#"><i class="fa fa-facebook fa-2x"></i></a> <a href="#"><i class="fa fa-instagram fa-2x"></i></a> <a href="#"><i class="fa fa-twitter fa-2x"></i></a> <a href="#"><i class="fa fa-flickr fa-2x"></i></a> </p>
 Copyright 2014 Cyrus Creative Studio. All rights reserved.
 </div>
-<!-- # Footer Ends -->
+<!-- # finalizando pie de pagina -->
 <a href="#home" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>
 
 
 
 
 
-<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<!-- La biblioteca de la Galería de imágenes Bootstrap, debe ser un elemento secundario del body -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <!-- The container for the modal slides -->
+    <!-- iniciando el contenedor -->
     <div class="slides"></div>
-    <!-- Controls for the borderless lightbox -->
+    <!-- controlando las caracteristicas del contenedor -->
     <h3 class="title">Title</h3>
     <a class="prev">‹</a>
     <a class="next">›</a>
     <a class="close">×</a>
-    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+<!-- modelo del dialogo, el cual tendra el contenedor -->     
 </div>
 
 
 
-<!-- jquery -->
+<!-- recursos de jquery -->
 <script src="assets/jquery.js"></script>
 
 <!-- wow script -->
 <script src="assets/wow/wow.min.js"></script>
 
 
-<!-- boostrap -->
+<!-- haciendo uso de la biblioteca boostrap para el desarrollo de animaciones -->
 <script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
 
-<!-- jquery mobile -->
+<!-- animaciones de jquery mobile -->
 <script src="assets/mobile/touchSwipe.min.js"></script>
 <script src="assets/respond/respond.js"></script>
 
-<!-- gallery -->
+<!-- requiriendo recursos de gallery -->
 <script src="assets/gallery/jquery.blueimp-gallery.min.js"></script>
 
-<!-- custom script -->
+<!-- recursos de script.js -->
 <script src="assets/script.js"></script>
 
 </body>
