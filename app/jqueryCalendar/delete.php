@@ -1,6 +1,6 @@
 <?php
 
-//delete.php
+//eliminar registro en base de datos
 
 if(isset($_POST["id"]))
 {
