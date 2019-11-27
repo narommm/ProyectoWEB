@@ -1,5 +1,5 @@
 @charset "UTF-8";
- 
+ /* haciendo uso de caracteristicas de bootstrap */
 .blueimp-gallery,.blueimp-gallery>.slides>.slide>.slide-content{
     position:absolute;
     top:0;
@@ -28,6 +28,7 @@
     -ms-touch-action:none;
     touch-action:none
 }
+/* decorando efectos de carousel */
 .blueimp-gallery-carousel{
     position:relative;
     z-index:auto;
@@ -37,6 +38,7 @@
     -ms-touch-action:pan-y;
     touch-action:pan-y
 }
+/* colocacion de efecto de carousel  */
 .blueimp-gallery-display{
     display:block;
     opacity:1
@@ -49,6 +51,7 @@
 .blueimp-gallery-carousel>.slides{
     position:absolute
 }
+/* transicion de carousel */
 .blueimp-gallery>.slides>.slide{
     position:relative;
     float:left;
@@ -67,6 +70,7 @@
     -o-transition:opacity .5s linear;
     transition:opacity .5s linear
 }
+/* insertando gif */
 .blueimp-gallery>.slides>.slide-loading{
     background:url(../img/loading.gif) center no-repeat;
     background-size:64px 64px
@@ -74,12 +78,14 @@
 .blueimp-gallery>.slides>.slide-loading>.slide-content{
     opacity:0
 }
+/* en caso de error */
 .blueimp-gallery>.slides>.slide-error{
     background:url(../img/error.png) center no-repeat
 }
 .blueimp-gallery>.slides>.slide-error>.slide-content{
     display:none
 }
+/* añadiendo efecto par la siguiente imagen */
 .blueimp-gallery>.prev,.blueimp-gallery>.next{
     position:absolute;
     top:50%;
@@ -112,6 +118,7 @@
     left:auto;
     right:15px
 }
+/* añadiendo efecto secundario a carousel */
 .blueimp-gallery>.close,.blueimp-gallery>.title{
     position:absolute;
     top:15px;
@@ -132,6 +139,7 @@
     text-decoration:none;
     cursor:pointer
 }
+/* generando una pausa para imagenes deslizante de carousel */
 .blueimp-gallery>.play-pause{
     position:absolute;
     right:15px;
@@ -165,6 +173,7 @@
     -ms-user-select:none;
     user-select:none
 }
+/* generando una alerta de error para la carga de imagenes */
 body:last-child .blueimp-gallery>.slides>.slide-error{
     background-image:url(../img/error.svg)
 }
@@ -184,6 +193,7 @@ body:last-child .blueimp-gallery-playing>.play-pause{
     position:relative
 }
 @charset "UTF-8";
+/* ininciando nuevo indicador */
 .blueimp-gallery>.indicator{
     position:absolute;
     top:auto;
@@ -196,6 +206,7 @@ body:last-child .blueimp-gallery-playing>.play-pause{
     line-height:10px;
     display:none
 }
+/* dando efctos a elemento de lista */
 .blueimp-gallery>.indicator>li{
     display:inline-block;
     width:9px;
@@ -262,6 +273,7 @@ body:last-child .blueimp-gallery-playing>.play-pause{
 .blueimp-gallery>.slides>.slide>.video-playing>iframe{
     top:0
 }
+/* imagen en caso de clic */
 .blueimp-gallery>.slides>.slide>.video-content>a{
     position:absolute;
     top:50%;

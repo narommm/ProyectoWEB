@@ -5,7 +5,7 @@
 	text-align: center;
 }
 
-/* Common style */
+/* estilo comun a figuras */
 .grid figure {
 	position: relative;
 	float: left;
@@ -22,7 +22,7 @@
 	max-width: 102%;
 	opacity: 1;
 }
-
+/* dando caracteristicas de figcaption */
 .grid figure figcaption {
 	padding: 2em;
 	color: #fff;

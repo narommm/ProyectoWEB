@@ -1,4 +1,5 @@
 <?php
+/* verificanco inicio de sesion con credenciales y mostrando calendario con reservas*/
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('location: ../../index.php');
@@ -8,15 +9,14 @@ if (!isset($_SESSION['usuario'])) {
 <?php        
         if(!empty($_POST)) {
 
-        // validation errors
+        // validacion de errores
         $numero_laboratorioError = null;
         $reserva_inicioError = null;
         $reserva_finError = null;
         $reserva_fechaError = null;
         $descripcionError = null;
 
-
-        // post values
+        // despues del valor
         require "input-filter/class.inputfilter.php";
         $filter = new InputFilter(array('b'), array ('src'));
 
@@ -122,34 +122,34 @@ if (!isset($_SESSION['usuario'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Reserva de Laboratorios</title>
 
-<!-- Google fonts -->
+<!-- requiriendo Google fonts para poder usar el directorio iteractivo que nos facilitara el uso de fuentes de la web-->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
 
-<!-- font awesome -->
+<!--inicializando el uso de frameworks de font awesome para el uso de iconos -->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-<!-- bootstrap -->
+<!-- usando la biblioteca bootstrap para el suo de plantilas, formularios, botones y cuadros de nuestra página-->
 <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
 
-<!-- animate.css -->
+<!-- conectando animate.css para las animaciones y configuraciones de la página-->
 <link rel="stylesheet" href="../../assets/animate/animate.css" />
 <link rel="stylesheet" href="../../assets/animate/set.css" />
 
-<!-- gallery -->
+<!-- agregando gallery.min.css junto con totas las animaciones de imagenes y cuerpo de la página -->
 <link rel="stylesheet" href="../../assets/gallery/blueimp-gallery.min.css">
 
-<!-- favicon -->
+<!-- requiriendo los iconos de favicon y las imagenes que seran de utilidad en nuestra web -->
 <link rel="shortcut icon" href="../../images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
 
-
+<!--utilizando los estilos de animacion de css-->
 <link rel="stylesheet" href="../../assets/style.css">
 
 </head>
 <body><br><br><br><br><br><br><br><br>
 
 <div id="contact" class="spacer">
-<!-- Header Starts -->
+<!-- Header iniciado -->
 <div class="navbar-wrapper">
       <div class="container">
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
@@ -160,6 +160,7 @@ if (!isset($_SESSION['usuario'])) {
               <!-- #Logo Ends -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
+                <!-- insertando iconos de span -->
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -168,6 +169,7 @@ if (!isset($_SESSION['usuario'])) {
              <!-- Nav Starts -->
              <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
+              <!-- creando acceso a inicio y un acerca de  -->
                  <li class="active"><a href="../../index.php">Home</a></li>
                  <li ><a href="../../index.php#about">Nosotros</a></li>
                  <?php
@@ -203,9 +205,9 @@ if (!isset($_SESSION['usuario'])) {
         </div>
       </div>
     </div>
-<!-- #Header Starts -->
-<!--Login Starts-->
-
+<!-- finalizando header-->
+<!--iniciando login-->
+<!-- creando un fomulario de registro de reserva de laboratorio -->
 <form class="container contactform center" role="form" method ='POST'>
 <h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
   <form class="row wowload fadeInLeftBig">      
@@ -233,7 +235,7 @@ if (!isset($_SESSION['usuario'])) {
 
 </form>
 </div>
-<!--Login Ends-->
+<!--finalizando login-->
 
 <div class = "container">
   <aside class="col-sm-4 col-sm-push-0">
@@ -350,28 +352,28 @@ if (!isset($_SESSION['usuario'])) {
 </div>
 
 
-<!-- Footer Starts -->
+<!-- iniciando pie de pagina -->
 <div class="footer text-center spacer">
 <p class="wowload flipInX"><a href="#"><i class="fa fa-facebook fa-2x"></i></a> <a href="#"><i class="fa fa-instagram fa-2x"></i></a> <a href="#"><i class="fa fa-twitter fa-2x"></i></a> <a href="#"><i class="fa fa-flickr fa-2x"></i></a> </p>
 Copyright 2019 Universidad Centroamericana José Simeón Cañas. All rights reserved.
 </div>
-<!-- # Footer Ends -->
+<!-- # finalizando pie de pagina -->
 <a href="#home" class="gototop "><i class="fa fa-angle-up  fa-3x"></i></a>
 
 
 
 
 
-<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<!-- La biblioteca de la Galería de imágenes Bootstrap, debe ser un elemento secundario del body -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <!-- The container for the modal slides -->
+    <!-- iniciando el contenedor -->
     <div class="slides"></div>
-    <!-- Controls for the borderless lightbox -->
+    <!-- controlando las caracteristicas del contenedor -->
     <h3 class="title">Title</h3>
     <a class="prev">‹</a>
     <a class="next">›</a>
     <a class="close">×</a>
-    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+<!-- modelo del dialogo, el cual tendra el contenedor -->     
 </div>
 
 

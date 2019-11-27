@@ -1,10 +1,12 @@
 <?php
+/* requiriendo credenciales para inicio de sesion */
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('location: viewCalendar.php');
     exit();
 }
 ?>
+<!-- iniciando  cuerpo de vista -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,27 +15,27 @@ if (!isset($_SESSION['usuario'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Reserva de Laboratorios</title>
 
-<!-- Google fonts -->
+<!-- requiriendo Google fonts para poder usar el directorio iteractivo que nos facilitara el uso de fuentes de la web-->
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
 
-<!-- font awesome -->
+<!--inicializando el uso de frameworks de font awesome para el uso de iconos -->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-<!-- bootstrap -->
+<!-- usando la biblioteca bootstrap para el suo de plantilas, formularios, botones y cuadros de nuestra página-->
 <link rel="stylesheet" href="../../assets/bootstrap/css/bootstrap.min.css" />
 
-<!-- animate.css -->
+<!-- conectando animate.css para las animaciones y configuraciones de la página-->
 <link rel="stylesheet" href="../../assets/animate/animate.css" />
 <link rel="stylesheet" href="../../assets/animate/set.css" />
 
-<!-- gallery -->
+<!-- agregando gallery.min.css junto con totas las animaciones de imagenes y cuerpo de la página -->
 <link rel="stylesheet" href="../../assets/gallery/blueimp-gallery.min.css">
 
-<!-- favicon -->
-<link rel="shortcut icon" href="../../images/favicon.jpg" type="image/x-icon">
+<!-- requiriendo los iconos de favicon y las imagenes que seran de utilidad en nuestra web -->
+<link rel="shortcut icon" href="../../images/FAVIVON32.png" type="image/x-icon">
 <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
 
-
+<!--utilizando los estilos de animacion de css-->
 <link rel="stylesheet" href="../../assets/style.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
@@ -43,7 +45,7 @@ if (!isset($_SESSION['usuario'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 
 <script>
-    
+    /* funcion para mostrar calendario */
   $(document).ready(function() {
    var calendar = $('#calendar').fullCalendar({
     editable:true,
@@ -83,6 +85,7 @@ if (!isset($_SESSION['usuario'])) {
       })
      }
     },*/
+    /* haciendo ejecucion de reserva en calendario y guardando la fecha y hora de registro */
     editable:true,
     eventResize:function(event)
     {
@@ -104,7 +107,7 @@ if (!isset($_SESSION['usuario'])) {
       }
      })
     },
-
+/* modificando la reserva */
     eventDrop:function(event)
     {
     var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
@@ -126,7 +129,7 @@ if (!isset($_SESSION['usuario'])) {
       }
      });
     },
-
+/* eliminando la reserva */
     eventClick:function(event)
     {
      if(confirm("Seguro que deseas eliminiar la reserva?"))
@@ -160,19 +163,18 @@ if (!isset($_SESSION['usuario'])) {
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
           <div class="container">
             <div class="navbar-header">
-              <!-- Logo Starts -->
+              <!-- insertando Logo  -->
               <a class="navbar-brand" href="../../#index.php"><img src="../../images/LOGO1.png" alt="logo"></a>
-              <!-- #Logo Ends -->
+              <!--creando botones -->
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
+                <!-- agregando icionos a spans -->
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
 
             </div>
-
-
              <!-- Nav Starts -->
              <div class="navbar-collapse  collapse">
               <ul class="nav navbar-nav navbar-right">
@@ -205,14 +207,14 @@ if (!isset($_SESSION['usuario'])) {
                   <li><a href="../../salir.php"><?php echo('Salir ('.$_SESSION['usuario'].')') ?></a></li>
               </ul>
             </div>
-            <!-- #Nav Ends -->
+            <!-- fin de navs -->
 
           </div>
         </div>
 
       </div>
     </div>
-<!-- #Header Starts -->
+<!--iniciando header -->
 <div>
 <br />
   <h2 align ="center"><a href="#">Reserva tu laboratorio</a></h2>
@@ -221,23 +223,30 @@ if (!isset($_SESSION['usuario'])) {
    <div id="calendar"></div>
   </div>
 </div>
-<!-- Cirlce Starts -->
+<!-- creando contenedor -->
 <div id="about"  class="container spacer about">
+<!-- Añadiendo un texto como tema a nuestro contenedor -->
 <h2 class="text-center wowload fadeInUp">Sistema de reserva de laboratorios.</h2>  
   <div class="row">
   <div class="col-sm-6 wowload fadeInLeft">
+  <!-- Especificando aspectos de relevancia a nuestra información -->
     <h4><i class="fa fa-flag"></i> Introducción</h4>
+              <!-- Montando un parrafo  -->
     <p>Bienvenido al sistema de reservas de la universidad José Simeón Cañas (UCA) en el cual podrá solicitar el uso de nuestras instalaciones. Contamos con # laboratorios a su disposición cuyos horarios hábiles son de lunes a  viernes desde las 7:00 am hasta las 7:00 pm. Además de días sábados de 7:00 am a 3:00 pm.</p>
   </div>
+  <!-- Agregando un nuevo div a la par de nuetra intro, con información importante-->
   <div class="col-sm-6 wowload fadeInRight">
   <h4><i class="fa fa-fire"></i></i> Importante.</h4>
+      <!-- Agregando parrafo de información relevante -->
   <p>La Universidad José Simeón Cañas se reserva los derechos de admisión de agentes externos a nuestro sistema, por lo que estos deberán contactar a nuestro administrador de servicios solicitándole credenciales de uso del sistema.</p>    
   </div>
   </div>
+  <!-- Abriendo nueva sección de, servicios, la cual contendra las reservas -->
   <div class="services">
     <h3 class="text-center wowload fadeInUp">Servicios</h3>
     <ul class="row text-center list-inline  wowload bounceInUp">
         <li>
+        <!-- agregando link de reserva -->
               <span><i class="fa fa-desktop"></i><b><a href="app/jqueryCalendar/index.php">Reservas</a></b></span>
           </li>
           <li>
@@ -256,38 +265,38 @@ if (!isset($_SESSION['usuario'])) {
 <br>
 <br>
 
-<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<!-- La biblioteca de la Galería de imágenes Bootstrap, debe ser un elemento secundario del body -->
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <!-- The container for the modal slides -->
+    <!-- iniciando el contenedor -->
     <div class="slides"></div>
-    <!-- Controls for the borderless lightbox -->
+<!-- controlando las caracteristicas del contenedor -->
     <h3 class="title">Title</h3>
     <a class="prev">‹</a>
     <a class="next">›</a>
     <a class="close">×</a>
-    <!-- The modal dialog, which will be used to wrap the lightbox content -->    
+<!-- modelo del dialogo, el cual tendra el contenedor --> 
 </div>
 <?php
   include '../../app/inc/footer.php';
 ?>
-<!-- jquery -->
+<!-- recursos de jquery -->
 <script src="assets/jquery.js"></script>
 
 <!-- wow script -->
 <script src="assets/wow/wow.min.js"></script>
 
 
-<!-- boostrap -->
+<!-- haciendo uso de la biblioteca boostrap para el desarrollo de animaciones -->
 <script src="assets/bootstrap/js/bootstrap.js" type="text/javascript" ></script>
 
-<!-- jquery mobile -->
+<!-- animaciones de jquery mobile -->
 <script src="assets/mobile/touchSwipe.min.js"></script>
 <script src="assets/respond/respond.js"></script>
 
-<!-- gallery -->
+<!-- requiriendo recursos de gallery -->
 <script src="assets/gallery/jquery.blueimp-gallery.min.js"></script>
 
-<!-- custom script -->
+<!-- recursos de script.js -->
 <script src="assets/script.js"></script>
 
 </body>
