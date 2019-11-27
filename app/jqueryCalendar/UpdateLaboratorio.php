@@ -9,69 +9,77 @@ if (!isset($_SESSION['usuario'])) {
       exit();
     }
 }
-
 ?>
-<?php        
-        if(!empty($_POST)) {
+<?php
+    $id = null;
+    if(!empty($_GET['numero_laboratorio'])) {
+        $id = $_GET['numero_laboratorio'];
+    }
+    if($id == null) {
+        header("Location: ../../index.php");
+    }
+    
+    require("../../conexion.php");
+    if(!empty($_POST)) {
+    	  
 
-        // validation errors
-        $numero_laboratorioError = null;
-        $denominacionError = null;
-        $costoError =  null;
-        $numero_maquinasError = null;
+       // validation errors
+       $numero_laboratorioError = null;
+       $denominacionError = null;
+       $costoError =  null;
+       $numero_maquinasError = null;
 
-        // post values
-        require "input-filter/class.inputfilter.php";
-        $filter = new InputFilter(array('b'), array ('src'));
+       // post values
+       require "input-filter/class.inputfilter.php";
+       $filter = new InputFilter(array('b'), array ('src'));
 
-        $numero_laboratorio = $filter->process(trim($_POST['laboratorio']));
-        $denominacion = $filter->process(trim($_POST['appt_denominacion']));
-        $costo = $filter->process(trim($_POST['appt_costo']));
-        $numero_maquinas = $filter->process(trim($_POST['appt_numero_maquinas']));
+       $numero_laboratorio = null;
+       $denominacion = $filter->process(trim($_POST['appt_denominacion']));
+       $costo = $filter->process(trim($_POST['appt_costo']));
+       $numero_maquinas = $filter->process(trim($_POST['appt_numero_maquinas']));
 
-        // validate input
-        $valid = true;
-        if(empty($numero_laboratorio)) {
-            $numero_laboratorioError = "Por favor ingrese el numero del laboratorio.";
-            $valid = false;
-        }
+       // validate input
+       $valid = true;       
+       if(empty($denominacion)) {
+           $denominacionError = "Por favor ingrese la denominacion de su laboratorio.";
+           $valid = false;
+       }
+       if(empty($costo)) {
+         $costoError = "Por favor ingrese el costo de reserva del laboratorio.";
+         $valid = false;
+       }
+     
+       if(empty($numero_maquinas)) {
+         $numero_maquinasError = "Por favor ingrese la cantidad de computadoras que pueden ocupar su laboratorio.";
+         $valid = false;
+       }
+     }      
         
-        if(empty($denominacion)) {
-            $denominacionError = "Por favor ingrese la denominacion de su laboratorio.";
-            $valid = false;
-        }
-        if(empty($costo)) {
-          $costoError = "Por favor ingrese el costo de reserva del laboratorio.";
-          $valid = false;
-        }
-      
-        if(empty($numero_maquinas)) {
-          $numero_maquinasError = "Por favor ingrese la cantidad de computadoras que pueden ocupar su laboratorio.";
-          $valid = false;
-        }
-      }      
-        // insert data
         if($valid) {
-            require("../../conexion.php");
+        	
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO laboratorio(numero_laboratorio,denominacion,costo,numero_maquinas) values(?,?,?,?)";
+            $sql = "UPDATE laboratorio SET  denominacion = ?,costo = ? ,numero_maquinas = ? WHERE numero_laboratorio = ?";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($numero_laboratorio, $denominacion,$costo, $numero_maquinas));
+            $stmt->execute(array($denominacion, $costo,$numero_maquinas, $id));
             $PDO = null;
             header('location: AddLaboratorio.php');
         }
-    
-  require_once 'Zebra_Pagination-master/Zebra_Pagination.php';
-  //concexion a la base para paginacion
-  $conn = pg_connect("host=raja.db.elephantsql.com dbname=npyottjk user=npyottjk password=MOplwc_adGR6KKJ9NCQ5vZ8QRBN960Wd");
-  ///variables para paginacion
-  $total = pg_query($conn, "SELECT count (*) FROM laboratorio");
-  $resul = 10;
-  //mandar los parametros para la paginacion
-  $paginacion = new Zebra_Pagination();
-  $paginacion->records($total);
-  $paginacion->records_per_page($resul);
-
+    else {
+        // read data
+        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT numero_laboratorio,denominacion,costo,numero_maquinas FROM laboratorio WHERE numero_laboratorio =? ";
+        $stmt = $PDO->prepare($sql);
+        $stmt->execute(array($id));
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $PDO = null;
+        if(empty($data)) {
+            header("Location: ../../index.php");
+        }      
+        $numero_laboratorio = $data['numero_laboratorio'];
+        $denominacion  = $data['denominacion'];
+        $costo = $data['costo'];
+        $numero_maquinas  = $data['numero_maquinas'];               
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -163,125 +171,25 @@ if (!isset($_SESSION['usuario'])) {
 <!-- #Header Starts -->
 <!--Login Starts-->
 
-
 <form class="container contactform center" role="form" method ='POST'>
 <h2 class="text-center  wowload fadeInUp">Agrega un laboratorio</h2>
   <form class="row wowload fadeInLeftBig">      
       <div class="col-sm-3 col-sm-offset-2 col-xs-12">
         <label >Agrega el número del nuevo laboratorio:</label>
-        <input type="text" placeholder="# Laboratorio" name="laboratorio" required>
+        <input type="text" placeholder="# Laboratorio" name="laboratorio" required  value='<?php print($numero_laboratorio); ?>' disabled>
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12">
         <label for="appt">Características:</label> 
-        <input type="text" id="appt_denominacion" name="appt_denominacion">
+        <input type="text" id="appt_denominacion" name="appt_denominacion"  value='<?php print($denominacion); ?>'>
         <label for="appt">Costo del laboratorio</label>
-        <input type="number" id="appt_costo" name="appt_costo" min="0" max="50" placeholder="25.00" required> 
+        <input type="number" id="appt_costo" name="appt_costo" min="0" max="50" placeholder="25.00" required  value='<?php print($costo); ?>'> 
       </div>
       <div class="col-sm-8 col-sm-offset-2 col-xs-12"> 
       <label for="appt">Número de máquinas</label>
-        <input type="number" id="appt_numero_maquinas" name="appt_numero_maquinas">            
+        <input type="number" id="appt_numero_maquinas" name="appt_numero_maquinas"  value='<?php print($numero_maquinas); ?>' >            
         <button class="btn btn-primary"><i class="fa fa-paper-plane" type="submit"></i>Enviar</button>
       </div>
   </form>
-
-
-
-</form>
-</div>
-<!--Login Ends-->
-</div>
-<!--Login Ends-->
-
-<div class = "container">
-  <aside class="col-sm-4 col-sm-push-0">
-      <div class="widget search">
-          <form name="form1" method="GET" action = "AddPeticion.php" id="cdr">
-              <h2>Buscar Peticion</h2>
-              <h6>Por numero de laboratorio</h6>
-              <div class="form-group">
-                  <input class="form-control"  name="buscar" type="text" id="busqueda" placeholder="Busqueda" autocomplete="off">
-                  <span class="input-group-btn">
-                      <button class="btn btn-xs btn-info" type="submit" name="submit" value="Buscar"><i class="icon-search">Buscar</i></button>
-                  </span>
-              </div>
-          </form>
-      </div>
-  </aside>
-</div>
-<div class='container'>
-<table class='table'>
-  <thead class="thead-dark">
-  <tr class='warning'>
-    <th scope="col" >Laboratorio</th>
-    <th scope="col" >Caracteristicas</th>
-    <th scope="col" >Costo</th>
-    <th scope="col" >Cantidad de maquinas</th>
-    <th scope="col" >Opciones</th>
-    </tr>
-  </thead>
-    <tbody>
-        <?php
-    if (isset($_GET['buscar']))
-        {
-            $buscar = $_GET['buscar'];
-
-            require("../../conexion.php");
-            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "SELECT numero_laboratorio,denominacion,costo,numero_maquinas FROM laboratorio WHERE numero_laboratorio =?";
-            $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($buscar));
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $PDO = null;
-            if(empty($data)) {
-                
-              header("Location: ../../index.php");
-            
-            }
-            foreach($data as $row) {
-              echo'<tr>';
-              echo'<td>'.$row['numero_laboratorio'].'</td>';
-              echo'<td>'.$row['denominacion'].'</td>';
-              echo'<td>'.$row['costo'].'</td>';
-              echo'<td>'.$row['numero_maquinas'].'</td>';
-              echo'<td>';
-              echo'<a class="btn btn-xs btn-info" href="UpdateLaboratorio.php?numero_laboratorio='.$row['numero_laboratorio'].'" >UPDATE</a>';
-              echo'<a class="btn btn-xs btn-danger" href="DeleteLaboratorio.php?numero_laboratorio='.$row['numero_laboratorio'].'" >DELETE</a>';
-              echo'</td>';
-              echo'</th>';
-            }
-          }
-        else {
-
-          require("../../conexion.php");
-          $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $sql = "SELECT numero_laboratorio,denominacion,costo,numero_maquinas FROM laboratorio";
-          $stmt = $PDO->prepare($sql);
-          $stmt->execute(array());
-          $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-          $PDO = null;
-          if(empty($data)) {    
-            header("Location: ../../index.php");
-          }
-          foreach($data as $row) {
-            echo'<tr>';
-              echo'<td>'.$row['numero_laboratorio'].'</td>';
-              echo'<td>'.$row['denominacion'].'</td>';
-              echo'<td>'.$row['costo'].'</td>';
-              echo'<td>'.$row['numero_maquinas'].'</td>';
-              echo'<td>';
-              echo'<a class="btn btn-xs btn-info" href="UpdateLaboratorio.php?numero_laboratorio='.$row['numero_laboratorio'].'" >UPDATE</a>';
-              echo'<a class="btn btn-xs btn-danger" href="DeleteLaboratorio.php?numero_laboratorio='.$row['numero_laboratorio'].'" >DELETE</a>';
-              echo'</td>';
-              echo'</th>';
-          }
-        }
-    ?>
-    </tbody>
-    <?php $paginacion->render(); ?>
-</table>
-</div>
-
-
 <!-- Footer Starts -->
 <div class="footer text-center spacer">
 <p class="wowload flipInX"><a href="#"><i class="fa fa-facebook fa-2x"></i></a> <a href="#"><i class="fa fa-instagram fa-2x"></i></a> <a href="#"><i class="fa fa-twitter fa-2x"></i></a> <a href="#"><i class="fa fa-flickr fa-2x"></i></a> </p>
