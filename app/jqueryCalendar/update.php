@@ -1,9 +1,10 @@
 <?php
 
-//update.php
+//funcion de actualizar en la base de datos
 
 $connect = new PDO("pgsql:host=".$host."; "."dbname=".$dbname, $user, $pass);
 
+/* recibiendo un id para modificar los datos de ese registro */
 if(isset($_POST["id"]))
 {
  $query = "
