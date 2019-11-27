@@ -27,7 +27,7 @@ wow.init();
 
 
 
-/* reando efectos visuales con carousel en imagenes, y estableciendo botones de anterior y sguiente en posicion vertical */
+/* creando efectos visuales con carousel en imagenes, y estableciendo botones de anterior y sguiente en posicion vertical */
 $('.carousel').swipe( {
      swipeLeft: function() {
          $(this).carousel('next');

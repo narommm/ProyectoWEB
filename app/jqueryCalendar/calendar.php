@@ -222,7 +222,7 @@ if (!isset($_SESSION['usuario'])) {
   <p>La Universidad José Simeón Cañas se reserva los derechos de admisión de agentes externos a nuestro sistema, por lo que estos deberán contactar a nuestro administrador de servicios solicitándole credenciales de uso del sistema.</p>    
   </div>
   </div>
-  <!-- Abiendo nueva sección de, servicios, la cual contendra las reservas -->
+  <!-- Abriendo nueva sección de, servicios, la cual contendra las reservas -->
   <div class="services">
     <h3 class="text-center wowload fadeInUp">Servicios</h3>
     <ul class="row text-center list-inline  wowload bounceInUp">

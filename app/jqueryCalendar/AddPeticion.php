@@ -94,7 +94,7 @@ $paginacion->records_per_page($resul);
 </head>
 <body><br><br><br><br><br><br><br><br>
 <div id="contact" class="spacer">
-<!-- Header Starts -->
+<!-- Header iniciado -->
 <div class="navbar-wrapper">
       <div class="container">
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="top-nav">
@@ -141,9 +141,9 @@ $paginacion->records_per_page($resul);
         </div>
       </div>
     </div>
-<!-- ininciando header-->
+<!-- finalizando header-->
 <!--iniciando login-->
-C<!-- creando un fomulario de registro de reserva de laboratorio -->
+<!-- creando un fomulario de registro de reserva de laboratorio -->
 <form class="container contactform center" role="form" method ='POST'>
 <h2 class="text-center  wowload fadeInUp">Reserva un laboratorio</h2>
   <form class="row wowload fadeInLeftBig">      
