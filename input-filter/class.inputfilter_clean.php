@@ -26,6 +26,7 @@ class InputFilter {
 		$this->attrMethod = $attrMethod;
 		$this->xssAuto = $xssAuto;
 	}
+	/* recibiendo parametro de recurso */
 	function process($source) {
 		if (is_array($source))	 {
 			for ($i = 0; $i < count($source); $i++)
@@ -34,6 +35,7 @@ class InputFilter {
 		} else if (is_string($source)) return $this->remove($this->decode($source));							
 		else return $source;	
 	}
+	/* verificando datos a remover */
 	function remove($source) {
 		$loopCounter=0;
 		while($source != $this->filterTags($source)) {
@@ -42,6 +44,7 @@ class InputFilter {
 		}
 		return $source;
 	}	
+	/* filtrando datos especificos */
 	function filterTags($source) {
 		$preTag = NULL;
 		$postTag = $source;
@@ -116,6 +119,7 @@ class InputFilter {
 		$preTag .= $postTag;
 		return $preTag;
 	}
+	/* analizando datos para asignar a atributos */
 	function filterAttr($attrSet) {	
 		$newSet = array();
 		for ($i = 0; $i <count($attrSet); $i++) {
