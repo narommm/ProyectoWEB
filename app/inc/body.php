@@ -125,26 +125,26 @@
     <!-- iniciando nueva animación de proxima imagen -->
      <figure class="effect-oscar  wowload fadeInUp">
      <!-- añadiendo la inserción de nuestra imagen -->
-        <img src="images/portfolio/2.jpg" alt="img01"/>
+        <img src="images/pictures/labos.jpg" alt="img01"/>
         <figcaption>
         <!-- nombrando la secunda asección de nuestro contenedor -->
-            <h2>Febrero</h2>
-            <p>Lily likes to play with crayons and pencils<br>
+            <h2>Laboratorios</h2>
+            <p>Nuevos metódos de enseñanza<br>
               <!-- Añadiendo una opción de ver más  -->
-            <a href="images/portfolio/2.jpg" title="1" data-gallery>Ver mas</a></p>            
+            <a href="images/pictures/labos.jpg" title="1" data-gallery>Ver mas</a></p>            
         </figcaption>
     </figure>
     <!-- iniciando proxima sección -->
      <figure class="effect-oscar  wowload fadeInUp">
      <!-- añadiendo imagen -->
-        <img src="images/portfolio/3.jpg" alt="img01"/>
+        <img src="images/pictures/cei.jpg" alt="img01"/>
         <figcaption>
         <!-- nombando a nuestra sección -->
-            <h2>music</h2>
+            <h2>CEII</h2>
             <!-- insertando un verso -->
-            <p>Lily likes to play with crayons and pencils<br>
+            <p>Comunidad Estudiantil Ingeniería Infórmatica<br>
             <!-- ver mas como una opción  -->
-            <a href="images/portfolio/3.jpg" title="1" data-gallery>Ver mas</a></p>            
+            <a href="images/pictures/cei.jpg" title="1" data-gallery>Ver mas</a></p>            
         </figcaption>
     </figure>
 </div>

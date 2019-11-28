@@ -118,7 +118,7 @@
               <span><i class="fa fa-cube"></i><b> Laboratorios</b></span>
           </li>
           <li>
-              <span><i class="fa fa-graduation-cap"></i><b>Trainings</b></span>
+              <span><i class="fa fa-graduation-cap"></i><b>CEII</b></span>
           </li>
 
       </ul>
@@ -135,7 +135,7 @@
         <figcaption>
             <h2>ICPC</h2>
             <p>International Competition<br>
-            <a href="images/portfolio/2.jpg" title="1">View more</a></p>     
+            <a href="images/pictures/icpc.jpg" title="1">View more</a></p>     
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
@@ -147,11 +147,11 @@
         </figcaption>
     </figure>
      <figure class="effect-oscar  wowload fadeInUp">
-        <img src="images/portfolio/3.jpg" alt="img01"/>
+        <img src="images/pictures/cei.jpg" alt="img01"/>
         <figcaption>
-            <h2>music</h2>
-            <p>Lily likes to play with crayons and pencils<br>
-            <a href="images/portfolio/3.jpg" title="1" data-gallery>View more</a></p>            
+            <h2>CEII</h2>
+            <p>Comunidad Estudiantil Ingeniería Infórmatica<br>
+            <a href="images/pictures/cei.jpg" title="1" data-gallery>View more</a></p>            
         </figcaption>
     </figure>
 </div>
